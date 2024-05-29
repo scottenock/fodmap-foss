@@ -1,5 +1,5 @@
-import * as React from "react";
 import FoodList from "./FoodList";
+import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Fodmap } from "../types/Fodmap";
 
