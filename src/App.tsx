@@ -1,28 +1,15 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import FoodList from "./components/FoodList";
+import FoodListSearch from "./components/FoodListSearch";
 import fodmap from "./data/fodmap";
+import { Fodmap } from "./types/Fodmap";
 
 function App() {
-  const [foods, setFoods] = useState(fodmap);
-  const [search, setSearch] = useState("");
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setSearch(e.target.value);
-
-  useEffect(() => {
-    const filteredFoods = fodmap.filter((food) =>
-      food.name.toLowerCase().includes(search.toLowerCase())
-    );
-    setFoods(filteredFoods);
-  }, [foods, search]);
+  const [foods, setFoods] = useState<Fodmap[]>(fodmap);
 
   return (
     <>
-      <input
-        className=" appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-        type="text"
-        onChange={handleChange}
-      />
+      <FoodListSearch setFoods={setFoods} />
       <FoodList foods={foods} />
     </>
   );

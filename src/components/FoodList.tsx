@@ -4,11 +4,15 @@ type FoodListProps = {
   foods: Fodmap[];
 };
 
+const styles = {
+  container: "flex justify-between items-center bg-yellow-200 my-1",
+};
+
 const FoodList: React.FC<FoodListProps> = ({ foods }) => {
   return (
     <div>
       {foods.map((food) => (
-        <div className="flex justify-between items-center bg-yellow-200 my-1">
+        <div key={food.id} className={styles.container}>
           <div>
             <p className="text-lg">{food.name}</p>
             <p className="text-base">{food.category}</p>
