@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Fodmap } from "../types/Fodmap";
 
 type FoodListProps = {
@@ -7,7 +6,7 @@ type FoodListProps = {
 
 const FoodList: React.FC<FoodListProps> = ({ foods }) => {
   return (
-    <div className="">
+    <div>
       {foods.map((food) => (
         <div className="flex justify-between items-center bg-yellow-200 my-1">
           <div>
