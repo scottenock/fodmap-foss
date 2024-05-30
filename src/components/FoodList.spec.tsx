@@ -2,6 +2,7 @@ import FoodList from "./FoodList";
 import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Fodmap } from "../types/Fodmap";
+import { MemoryRouter } from "react-router-dom";
 
 const items: Fodmap[] = [
   {
@@ -22,7 +23,11 @@ const items: Fodmap[] = [
 
 describe("FoodList", () => {
   test("component renders expected text", () => {
-    render(<FoodList foods={items} />);
+    render(
+      <MemoryRouter>
+        <FoodList foods={items} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText("apples")).toBeInTheDocument();
     expect(screen.getByText("Barbeque sauce")).toBeInTheDocument();
@@ -30,5 +35,18 @@ describe("FoodList", () => {
     expect(screen.getByText("Condiments")).toBeInTheDocument();
     expect(screen.getByText("high")).toBeInTheDocument();
     expect(screen.getByText("low")).toBeInTheDocument();
+  });
+
+  test("list items have the expected anchor tags", () => {
+    render(
+      <MemoryRouter>
+        <FoodList foods={items} />
+      </MemoryRouter>
+    );
+
+    const links = screen.getAllByRole("link");
+
+    expect(links[0]).toHaveAttribute("href", "/food/1");
+    expect(links[1]).toHaveAttribute("href", "/food/2");
   });
 });
