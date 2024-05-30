@@ -19,7 +19,7 @@ const FoodList: React.FC<FoodListProps> = ({ foods }) => {
               <p className="text-lg">{food.name}</p>
               <p className="text-base">{food.category}</p>
             </div>
-            <p className="text-3xl">{food.fodmap}</p>
+            <p className="text-3xl">{food.fodmap.toUpperCase()}</p>
           </div>
         </Link>
       ))}

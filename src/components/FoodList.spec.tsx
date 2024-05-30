@@ -33,8 +33,8 @@ describe("FoodList", () => {
     expect(screen.getByText("Barbeque sauce")).toBeInTheDocument();
     expect(screen.getByText("Fruit")).toBeInTheDocument();
     expect(screen.getByText("Condiments")).toBeInTheDocument();
-    expect(screen.getByText("high")).toBeInTheDocument();
-    expect(screen.getByText("low")).toBeInTheDocument();
+    expect(screen.getByText("High")).toBeInTheDocument();
+    expect(screen.getByText("Low")).toBeInTheDocument();
   });
 
   test("list items have the expected anchor tags", () => {
