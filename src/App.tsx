@@ -1,16 +1,13 @@
-import { useState } from "react";
-import FoodList from "./components/FoodList";
-import FoodListSearch from "./components/FoodListSearch";
-import fodmap from "./data/fodmap";
-import { Fodmap } from "./types/Fodmap";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Foods from "./pages/Foods";
 function App() {
-  const [foods, setFoods] = useState<Fodmap[]>(fodmap);
-
   return (
     <>
-      <FoodListSearch setFoods={setFoods} />
-      <FoodList foods={foods} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" Component={Foods} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
