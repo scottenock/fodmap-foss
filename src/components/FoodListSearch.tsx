@@ -1,19 +1,19 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Fodmap } from "../types/Fodmap";
-import fodmap from "../data/fodmap";
 
 type FoodListSearchProps = {
   setFoods: (foods: Fodmap[]) => void;
+  foods: Fodmap[];
 };
 
-const FoodListSearch: React.FC<FoodListSearchProps> = ({ setFoods }) => {
+const FoodListSearch: React.FC<FoodListSearchProps> = ({ setFoods, foods }) => {
   const [search, setSearch] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setSearch(e.target.value);
 
   useEffect(() => {
-    const filteredFoods = fodmap.filter((food) =>
+    const filteredFoods = foods.filter((food) =>
       food.name.toLowerCase().includes(search.toLowerCase())
     );
     setFoods(filteredFoods);

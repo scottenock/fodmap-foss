@@ -36,7 +36,6 @@ const FoodListFilter: React.FC<FoodListFilterProps> = ({ foods, setFoods }) => {
   }, [sort]);
 
   return (
-    // <Select options={options} defaultValue={options[0]} className={className} />
     <div className="flex justify-around my-2">
       <Button {...setProps("l-h")}>Low-High</Button>
       <Button {...setProps("a-z")}>A-Z</Button>
