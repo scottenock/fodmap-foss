@@ -25,15 +25,12 @@ const FoodListFilter: React.FC<FoodListFilterProps> = ({ foods, setFoods }) => {
 
   useEffect(() => {
     if (sort === "a-z") {
-      console.log("update1");
       setFoods(foods.toSorted((f1, f2) => sortAlphabetical(f1, f2)));
     }
     if (sort === "l-h") {
-      console.log("update2");
       setFoods(foods.toSorted((f1, f2) => sortHighFodmap(f1, f2)).reverse());
     }
     if (sort === "h-l") {
-      console.log("update3");
       setFoods(foods.toSorted((f1, f2) => sortHighFodmap(f1, f2)));
     }
   }, [sort]);
