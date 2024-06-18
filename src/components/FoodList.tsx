@@ -13,7 +13,7 @@ const FoodList: React.FC<FoodListProps> = ({ foods }) => {
   return (
     <div>
       {foods.map((food) => (
-        <Link to={`/food/${food.id}`}>
+        <Link to={`/food/${food.id}`} key={food.id}>
           <div key={food.id} className={styles.container}>
             <div>
               <p className="text-lg">{food.name}</p>
