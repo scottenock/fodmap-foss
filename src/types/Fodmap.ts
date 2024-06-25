@@ -3,6 +3,7 @@ export type Fodmap = {
   name: string;
   fodmap: string;
   category: string;
+  qty?: string;
   details?: {
     oligos: number;
     fructose: number;

@@ -1,21 +1,27 @@
-import * as React from "react";
 import { Fodmap } from "../types/Fodmap";
+import { Link } from "react-router-dom";
 
 type FoodListProps = {
   foods: Fodmap[];
 };
 
+const styles = {
+  container: "flex justify-between items-center bg-yellow-200 my-1",
+};
+
 const FoodList: React.FC<FoodListProps> = ({ foods }) => {
   return (
-    <div className="">
+    <div>
       {foods.map((food) => (
-        <div className="flex justify-between items-center bg-yellow-200 my-1">
-          <div>
-            <p className="text-lg">{food.name}</p>
-            <p className="text-base">{food.category}</p>
+        <Link to={`/food/${food.id}`} key={food.id}>
+          <div key={food.id} className={styles.container}>
+            <div>
+              <p className="text-lg">{food.name}</p>
+              <p className="text-base">{food.category}</p>
+            </div>
+            <p className="text-3xl">{food.fodmap.toUpperCase()}</p>
           </div>
-          <p className="text-3xl">{food.fodmap}</p>
-        </div>
+        </Link>
       ))}
     </div>
   );
