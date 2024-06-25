@@ -1,11 +1,12 @@
 import { Fodmap } from "../types/Fodmap";
+import carrot from "../icons/carrot-solid.svg";
 
 type FoodItemProps = {
   food: Fodmap;
 };
 
 const styles = {
-  container: "flex justify-between items-center bg-yellow-200 my-1",
+  container: "flex justify-between items-center my-1",
 };
 
 const fodmapRating = (score?: number) => {
@@ -19,14 +20,15 @@ const fodmapRating = (score?: number) => {
 
 const FoodItem: React.FC<FoodItemProps> = ({ food }) => {
   return (
-    <div className="bg-yellow-200">
+    <div className="">
       <div className={styles.container}>
+        <img src={carrot} className="max-w-[100px]" />
         <div>
-          <p className="text-lg">{food.name}</p>
-          <p className="text-base">Category: {food.category}</p>
+          <p className="text-4xl">{food.name}</p>
+          <p className="text-base">{food.category}</p>
           <p className="text-base">Max Quantity: {food.qty ?? "unspecified"}</p>
+          <p className="text-2xl">{food.fodmap.toUpperCase()}</p>
         </div>
-        <p className="text-2xl">{food.fodmap.toUpperCase()}</p>
       </div>
       <h2>Details:</h2>
       <div className="flex justify-between">

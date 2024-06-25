@@ -4,14 +4,14 @@ import FoodInfo from "./pages/FoodInfo";
 
 function App() {
   return (
-    <>
+    <div className="max-w-screen-lg mx-auto">
       <BrowserRouter>
         <Routes>
           <Route path="/" Component={Foods} />
           <Route path="/food/:id" Component={FoodInfo} />
         </Routes>
       </BrowserRouter>
-    </>
+    </div>
   );
 }
 
