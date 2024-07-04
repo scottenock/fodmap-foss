@@ -4,7 +4,7 @@ import FoodInfo from "./pages/FoodInfo";
 
 function App() {
   return (
-    <div className="max-w-screen-lg mx-auto">
+    <div className="max-w-screen-sm mx-auto">
       <BrowserRouter>
         <Routes>
           <Route path="/" Component={Foods} />

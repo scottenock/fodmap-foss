@@ -2,6 +2,7 @@ import FoodListSearch from "./FoodListSearch";
 import { describe, expect, it, vitest } from "vitest";
 import { fireEvent, render, screen, cleanup } from "@testing-library/react";
 import { Fodmap } from "../types/Fodmap";
+import fodmap from "../data/fodmap";
 
 const items: Fodmap[] = [
   {
@@ -39,7 +40,7 @@ describe("FoodListSearch", () => {
   it("will filter and return the matching foods", async () => {
     const setFoods = vitest.fn();
 
-    render(<FoodListSearch setFoods={setFoods} />);
+    render(<FoodListSearch setFoods={setFoods} foods={fodmap} />);
     const input = screen.getByRole("textbox");
 
     fireEvent.change(input, { target: { value: "Barbeque sauce" } });
@@ -49,7 +50,7 @@ describe("FoodListSearch", () => {
   it("will filter and return the a partial match", async () => {
     const setFoods = vitest.fn();
 
-    render(<FoodListSearch setFoods={setFoods} />);
+    render(<FoodListSearch setFoods={setFoods} foods={fodmap} />);
     const input = screen.getByRole("textbox");
 
     fireEvent.change(input, { target: { value: "chickpeas" } });

@@ -1,12 +1,12 @@
 import { Fodmap } from "../types/Fodmap";
-import carrot from "../icons/carrot-solid.svg";
+import Score from "./Score";
 
 type FoodItemProps = {
   food: Fodmap;
 };
 
 const styles = {
-  container: "flex justify-between items-center my-1",
+  container: "p-3 flex my-1 shadow-md mb-2 justify-between",
 };
 
 const fodmapRating = (score?: number) => {
@@ -19,32 +19,48 @@ const fodmapRating = (score?: number) => {
 };
 
 const FoodItem: React.FC<FoodItemProps> = ({ food }) => {
+  const ratingColour = food.fodmap === "high" ? "bg-red-500" : "bg-green-300";
+
   return (
     <div className="">
-      <div className={styles.container}>
-        <img src={carrot} className="max-w-[100px]" />
+      <section className={styles.container}>
         <div>
-          <p className="text-4xl">{food.name}</p>
+          <p className="text-3xl">{food.name}</p>
           <p className="text-base">{food.category}</p>
           <p className="text-base">Max Quantity: {food.qty ?? "unspecified"}</p>
+        </div>
+        <div className="flex items-center my-1">
+          <span className={`rounded-full w-7 h-7 block mr-2 ${ratingColour}`} />
           <p className="text-2xl">{food.fodmap.toUpperCase()}</p>
         </div>
-      </div>
-      <h2>Details:</h2>
-      <div className="flex justify-between">
-        <div>
-          <p>Oligos: {fodmapRating(food.details?.oligos)}</p>
-        </div>
-        <div>
-          <p>Lactose: {fodmapRating(food.details?.lactose)}</p>
-        </div>
-        <div>
-          <p>Fructose: {fodmapRating(food.details?.fructose)}</p>
-        </div>
-        <div>
-          <p>Polyols: {fodmapRating(food.details?.polyols)}</p>
-        </div>
-      </div>
+      </section>
+      <section className="p-3">
+        <h2 className="text-base font-bold mb-3">Details:</h2>
+        <p className="text-base font-medium">Oligos</p>
+        <Score
+          score={food.details?.oligos ?? 3}
+          text={fodmapRating(food.details?.oligos)}
+        />
+        <div className="border-b-2 border-gray-300 mb-2" />
+        <p className="text-base font-medium">Lactose</p>
+        <Score
+          score={food.details?.lactose ?? 3}
+          text={fodmapRating(food.details?.lactose)}
+        />
+        <div className="border-b-2 border-gray-300 mb-2" />
+        <p className="text-base font-medium">Fructose</p>
+        <Score
+          score={food.details?.fructose ?? 3}
+          text={fodmapRating(food.details?.fructose)}
+        />
+        <div className="border-b-2 border-gray-300 mb-2" />
+        <p className="text-base font-medium">Polyols</p>
+        <Score
+          score={food.details?.polyols ?? 3}
+          text={fodmapRating(food.details?.polyols)}
+        />
+        <div className="border-b-2 border-gray-300" />
+      </section>
     </div>
   );
 };
