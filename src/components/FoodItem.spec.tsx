@@ -32,13 +32,13 @@ describe("FoodItem", () => {
     );
 
     expect(screen.getByText("apples")).toBeInTheDocument();
-    expect(screen.getByText("Category: Fruit")).toBeInTheDocument();
+    expect(screen.getByText("Fruit")).toBeInTheDocument();
     expect(screen.getByText("Max Quantity: 2")).toBeInTheDocument();
     expect(screen.getByText("HIGH")).toBeInTheDocument();
-    expect(screen.getByText("Oligos: Low")).toBeInTheDocument();
-    expect(screen.getByText("Fructose: High")).toBeInTheDocument();
-    expect(screen.getByText("Polyols: High")).toBeInTheDocument();
-    expect(screen.getByText("Lactose: Low")).toBeInTheDocument();
+    expect(screen.getByText("Oligos")).toBeInTheDocument();
+    expect(screen.getByText("Fructose")).toBeInTheDocument();
+    expect(screen.getByText("Polyols")).toBeInTheDocument();
+    expect(screen.getByText("Lactose")).toBeInTheDocument();
   });
 
   test("component renders the expected text (BBQ sauce)", () => {
@@ -49,12 +49,12 @@ describe("FoodItem", () => {
     );
 
     expect(screen.getByText("Barbeque sauce")).toBeInTheDocument();
-    expect(screen.getByText("Category: Condiments")).toBeInTheDocument();
+    expect(screen.getByText("Condiments")).toBeInTheDocument();
     expect(screen.getByText("Max Quantity: unspecified")).toBeInTheDocument();
     expect(screen.getByText("LOW")).toBeInTheDocument();
-    expect(screen.getByText("Oligos: High")).toBeInTheDocument();
-    expect(screen.getByText("Fructose: Low")).toBeInTheDocument();
-    expect(screen.getByText("Polyols: Low")).toBeInTheDocument();
-    expect(screen.getByText("Lactose: Low")).toBeInTheDocument();
+    expect(screen.getByText("Oligos")).toBeInTheDocument();
+    expect(screen.getByText("Fructose")).toBeInTheDocument();
+    expect(screen.getByText("Polyols")).toBeInTheDocument();
+    expect(screen.getByText("Lactose")).toBeInTheDocument();
   });
 });
