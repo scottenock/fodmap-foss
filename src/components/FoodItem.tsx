@@ -30,7 +30,7 @@ const FoodItem: React.FC<FoodItemProps> = ({ food }) => {
           <p className="text-base">Max Quantity: {food.qty ?? "unspecified"}</p>
         </div>
         <div className="flex items-center my-1">
-          <span className={`rounded-full w-7 h-7 block mr-2 ${ratingColour}`} />
+          <span className={`rounded-full w-5 h-5 block mr-2 ${ratingColour}`} />
           <p className="text-2xl">{food.fodmap.toUpperCase()}</p>
         </div>
       </section>
