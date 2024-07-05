@@ -1,6 +1,6 @@
 import FoodListSearch from "./FoodListSearch";
 import { describe, expect, it, vitest } from "vitest";
-import { fireEvent, render, screen, cleanup } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Fodmap } from "../types/Fodmap";
 import fodmap from "../data/fodmap";
 

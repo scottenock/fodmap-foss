@@ -1,8 +1,7 @@
-import FoodList from "./FoodList";
-import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { Fodmap } from "../types/Fodmap";
 import { MemoryRouter } from "react-router-dom";
+import { describe, expect, test } from "vitest";
+import { Fodmap } from "../types/Fodmap";
 import FoodItem from "./FoodItem";
 
 const items: Fodmap[] = [

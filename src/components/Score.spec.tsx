@@ -1,6 +1,6 @@
+import { render, screen } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
 import Score from "./Score";
-import { describe, expect, it, vitest } from "vitest";
-import { fireEvent, render, screen, cleanup } from "@testing-library/react";
 
 describe("Score", () => {
   const dummyText = "a random string";

@@ -1,9 +1,7 @@
-// import Select from "react-select";
-
 import { useEffect, useState } from "react";
-import Button from "./Button";
 import { Fodmap } from "../types/Fodmap";
 import { sortAlphabetical, sortHighFodmap } from "../utilities/sort";
+import Button from "./Button";
 
 type FoodListFilterProps = {
   className?: string;
