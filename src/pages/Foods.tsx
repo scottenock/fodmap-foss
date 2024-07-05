@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
+import FoodList from "../components/FoodList";
+import FoodListFilter from "../components/FoodListFilter";
+import FoodListSearch from "../components/FoodListSearch";
 import fodmap from "../data/fodmap";
 import { Fodmap } from "../types/Fodmap";
-import FoodList from "../components/FoodList";
-import FoodListSearch from "../components/FoodListSearch";
-import FoodListFilter from "../components/FoodListFilter";
 
 function Foods() {
   const [foods, setFoods] = useState<Fodmap[]>(fodmap);

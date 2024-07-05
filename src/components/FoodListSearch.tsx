@@ -1,4 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
+import options from "../icons/vertical-dots.svg";
 import { Fodmap } from "../types/Fodmap";
 
 type FoodListSearchProps = {
@@ -20,11 +21,15 @@ const FoodListSearch: React.FC<FoodListSearchProps> = ({ setFoods, foods }) => {
   }, [search]);
 
   return (
-    <input
-      className="appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-      type="text"
-      onChange={handleChange}
-    />
+    <div className="bg-green-400 p-2 flex items-center">
+      <input
+        placeholder="search..."
+        className="appearance-none border-2 placeholder:text-white bg-green-400 border-green-300 rounded-full w-full mr-3 py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:text-black text-white focus:border-white"
+        type="text"
+        onChange={handleChange}
+      />
+      <img src={options} className="w-5 h-5" />
+    </div>
   );
 };
 
