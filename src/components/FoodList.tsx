@@ -1,5 +1,5 @@
-import { Fodmap } from "../types/Fodmap";
 import { Link } from "react-router-dom";
+import { Fodmap } from "../types/Fodmap";
 import Score from "./Score";
 
 type FoodListProps = {
@@ -14,9 +14,9 @@ const FoodList: React.FC<FoodListProps> = ({ foods }) => {
   return (
     <div>
       {foods.map((food) => (
-        <>
-          <Link to={`/food/${food.id}`} key={food.id}>
-            <div key={food.id} className={styles.container}>
+        <div key={food.id}>
+          <Link to={`/food/${food.id}`}>
+            <div className={styles.container}>
               <div>
                 <p className="text-lg">{food.name}</p>
                 <p className="text-base">{food.category}</p>
@@ -31,7 +31,7 @@ const FoodList: React.FC<FoodListProps> = ({ foods }) => {
             </div>
           </Link>
           <div className="border-b-2 border-gray-300 mb-2" />
-        </>
+        </div>
       ))}
     </div>
   );

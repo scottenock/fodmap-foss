@@ -1,40 +1,42 @@
 import { useEffect, useState } from "react";
+import alphabetical from "../data/alphabetical";
+import high from "../data/high";
+import low from "../data/low";
 import { Fodmap } from "../types/Fodmap";
-import { sortAlphabetical, sortHighFodmap } from "../utilities/sort";
 import Button from "./Button";
 
 type FoodListFilterProps = {
   className?: string;
-  foods: Fodmap[];
   setFoods: (foods: Fodmap[]) => void;
 };
 
 const styles = {
-  button: "border rounded border-gray-800 px-2 py-1",
-  selected: "bg-emerald-200",
+  button: "border-none px-2 py-2 rounded-none w-1/3",
+  selected: "border-none bg-white",
 };
 
-const FoodListFilter: React.FC<FoodListFilterProps> = ({ foods, setFoods }) => {
+const FoodListFilter: React.FC<FoodListFilterProps> = ({ setFoods }) => {
   const [sort, setSort] = useState("a-z");
   const setProps = (sortTerm: string) => ({
     onClick: () => setSort(sortTerm),
-    className: sortTerm === sort ? styles.selected : "",
+    className:
+      sortTerm === sort ? `${styles.button} ${styles.selected}` : styles.button,
   });
 
   useEffect(() => {
     if (sort === "a-z") {
-      setFoods(foods.toSorted((f1, f2) => sortAlphabetical(f1, f2)));
+      setFoods(alphabetical);
     }
     if (sort === "l-h") {
-      setFoods(foods.toSorted((f1, f2) => sortHighFodmap(f1, f2)).reverse());
+      setFoods([...low, ...high]);
     }
     if (sort === "h-l") {
-      setFoods(foods.toSorted((f1, f2) => sortHighFodmap(f1, f2)));
+      setFoods([...high, ...low]);
     }
   }, [sort]);
 
   return (
-    <div className="flex justify-around my-2">
+    <div className="flex justify-around bg-gray-200">
       <Button {...setProps("l-h")}>Low-High</Button>
       <Button {...setProps("a-z")}>A-Z</Button>
       <Button {...setProps("h-l")}>High-Low</Button>

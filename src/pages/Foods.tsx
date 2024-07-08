@@ -16,7 +16,7 @@ function Foods() {
   return (
     <>
       <FoodListSearch foods={foods} setFoods={setFoodsToRender} />
-      <FoodListFilter foods={foods} setFoods={setFoods} />
+      <FoodListFilter setFoods={setFoods} />
       <FoodList foods={foodsToRender} />
     </>
   );
