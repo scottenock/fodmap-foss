@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 import FoodInfo from "./pages/FoodInfo";
 import Foods from "./pages/Foods";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <AppProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" Component={Foods} />
+            <Route path="/" Component={Home} />
+            <Route path="/food" Component={Foods} />
             <Route path="/food/:id" Component={FoodInfo} />
           </Routes>
         </BrowserRouter>
