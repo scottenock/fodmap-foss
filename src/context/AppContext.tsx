@@ -16,6 +16,7 @@ type ActionProps = {
 
 type AppState = {
   foods: Fodmap[];
+  sortOrder: string;
 };
 
 type ContextProps = {
@@ -29,7 +30,7 @@ export enum ACTIONS {
   LOW_HIGH_ORDER = "LOW_HIGH_ORDER",
 }
 
-const defaultState = { foods: alphabetical };
+const defaultState: AppState = { foods: alphabetical, sortOrder: "a-z" };
 
 export const AppProvider = ({
   children,
@@ -38,11 +39,11 @@ export const AppProvider = ({
   const reducer = (state: AppState, action: ActionProps) => {
     switch (action.type) {
       case ACTIONS.ALPHABETICAL_ORDER:
-        return { foods: alphabetical };
+        return { foods: alphabetical, sortOrder: "a-z" };
       case ACTIONS.HIGH_LOW_ORDER:
-        return { foods: [...high, ...low] };
+        return { foods: [...high, ...low], sortOrder: "h-l" };
       case ACTIONS.LOW_HIGH_ORDER:
-        return { foods: [...low, ...high] };
+        return { foods: [...low, ...high], sortOrder: "l-h" };
       default:
         return state;
     }

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import AppContext, { ACTIONS } from "../context/AppContext";
 import Button from "./Button";
 
@@ -13,32 +13,35 @@ const styles = {
 };
 
 const FoodListFilter: React.FC<FoodListFilterProps> = ({ className = "" }) => {
-  const [sort, setSort] = useState("a-z");
-  const { dispatch } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
 
   const setProps = (sortTerm: string) => ({
-    onClick: () => setSort(sortTerm),
     className:
-      sortTerm === sort ? `${styles.button} ${styles.selected}` : styles.button,
+      sortTerm === state.sortOrder
+        ? `${styles.button} ${styles.selected}`
+        : styles.button,
   });
-
-  useEffect(() => {
-    if (sort === "a-z") {
-      dispatch({ type: ACTIONS.ALPHABETICAL_ORDER });
-    }
-    if (sort === "l-h") {
-      dispatch({ type: ACTIONS.LOW_HIGH_ORDER });
-    }
-    if (sort === "h-l") {
-      dispatch({ type: ACTIONS.HIGH_LOW_ORDER });
-    }
-  }, [sort]);
 
   return (
     <div className={`${styles.container} ${className}`}>
-      <Button {...setProps("l-h")}>Low-High</Button>
-      <Button {...setProps("a-z")}>A-Z</Button>
-      <Button {...setProps("h-l")}>High-Low</Button>
+      <Button
+        onClick={() => dispatch({ type: ACTIONS.LOW_HIGH_ORDER })}
+        {...setProps("l-h")}
+      >
+        Low-High
+      </Button>
+      <Button
+        onClick={() => dispatch({ type: ACTIONS.ALPHABETICAL_ORDER })}
+        {...setProps("a-z")}
+      >
+        A-Z
+      </Button>
+      <Button
+        onClick={() => dispatch({ type: ACTIONS.HIGH_LOW_ORDER })}
+        {...setProps("h-l")}
+      >
+        High-Low
+      </Button>
     </div>
   );
 };
