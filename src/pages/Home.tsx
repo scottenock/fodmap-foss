@@ -13,8 +13,11 @@ function Home() {
       <Link to="/food">
         <button className={styles.button}>Search</button>
       </Link>
-      <Link to="/food">
+      <Link to="/about">
         <button className={styles.button}>About</button>
+      </Link>
+      <Link to="/donate">
+        <button className={styles.button}>Donate</button>
       </Link>
     </div>
   );
