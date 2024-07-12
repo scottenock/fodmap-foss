@@ -22,12 +22,12 @@ function Donate() {
             If you have found this app beneficial we encourage you to donate
           </Para>
           <Para>
-            We, the company which originally created FODMAP FOSS, have decided
-            to make FODMAP FOSS free and open-source software (FOSS) because we
-            believe in the openness of the Internet and we want to be a
-            counterpart to all the ones who want to force people to store their
-            private data in "the cloud" (say: other people's computers), using
-            proprietary standards.
+            We, Laputa Labs, the company which originally created FODMAP FOSS,
+            have decided to make FODMAP FOSS free and open-source software
+            (FOSS) because we believe in the openness of the Internet and we
+            want to be a counterpart to all the ones who want to force people to
+            store their private data in "the cloud" (say: other people's
+            computers), using proprietary standards.
           </Para>
         </section>
         <section className={styles.section}>
