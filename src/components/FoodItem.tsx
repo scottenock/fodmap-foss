@@ -24,7 +24,7 @@ const FoodItem: React.FC<FoodItemProps> = ({ food }) => {
 
   return (
     <div className="">
-      <NavBar />
+      <NavBar goesHome={false} />
       <section className={styles.container}>
         <div>
           <p className="text-3xl">{food.name}</p>
