@@ -31,7 +31,7 @@ function Donate() {
           </Para>
         </section>
         <section className={styles.section}>
-          <h2 className="font-bold text-lg mb-4">Donate Via Monero (XMR)</h2>
+          <h2 className="font-bold text-lg mb-4">Donate via Monero (XMR)</h2>
           <Para>
             We currently accept donations via the cryptocurrency: Monero. Like
             cash, Monero is fungible, preserves user privacy, and is censorship

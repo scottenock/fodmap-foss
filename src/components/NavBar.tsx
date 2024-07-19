@@ -4,16 +4,22 @@ import options from "../icons/vertical-dots.svg";
 import { useEffect, useRef, useState } from "react";
 
 type NavBarProps = {
+  className?: string;
   goesHome?: boolean;
+  children?: React.ReactNode;
 };
 
 const styles = {
-  container: "px-4 py-5 bg-green-400 flex justify-between",
-  icons: "w-5 h-5 cursor-pointer",
+  container: "px-4 py-6 bg-green-400 flex justify-between items-center",
+  icons: "w-5 h-5 cursor-pointer mx-3",
   links: "block px-5 py-3 ",
 };
 
-const NavBar: React.FC<NavBarProps> = ({ goesHome = true }) => {
+const NavBar: React.FC<NavBarProps> = ({
+  className = "",
+  goesHome = true,
+  children,
+}) => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -27,12 +33,13 @@ const NavBar: React.FC<NavBarProps> = ({ goesHome = true }) => {
   }, [showMenu]);
 
   return (
-    <nav className={styles.container}>
+    <nav className={`${styles.container} ${className}`}>
       <img
         src={leftArrow}
         className={styles.icons}
         onClick={() => (goesHome ? navigate("/") : navigate(-1))}
       />
+      {children}
       <div className="relative">
         <img src={options} className={styles.icons} onClick={handleClick} />
         <div
