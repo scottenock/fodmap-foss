@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 import About from "./pages/About";
 import Donate from "./pages/Donate";
@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="max-w-screen-sm mx-auto">
       <AppProvider>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route path="/" Component={Home} />
             <Route path="/about" Component={About} />
@@ -18,7 +18,7 @@ function App() {
             <Route path="/food" Component={Foods} />
             <Route path="/food/:id" Component={FoodInfo} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </AppProvider>
     </div>
   );
