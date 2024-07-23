@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import utensils from "../icons/utensils-solid.svg";
+import logo from "../icons/logo.png";
 
 const styles = {
   button: "block rounded-lg w-52 bg-green-400 p-3 mb-3",
@@ -8,8 +8,9 @@ const styles = {
 function Home() {
   return (
     <div className="w-min mx-auto h-screen flex flex-col justify-center items-center">
-      <img className="w-20 h-20" src={utensils} alt="Two Chefs Cooking" />
-      <h1 className="text-lg text-nowrap my-10 text-center">Fodmap Foods</h1>
+      <img className="w-28 h-28 rounded-full" src={logo} alt="App Logo" />
+      <h1 className="text-lg text-nowrap mt-10 text-center">FODMAP FOSS</h1>
+      <p className="mb-10">Free & Open Source</p>
       <Link to="/food">
         <button className={styles.button}>Search</button>
       </Link>
