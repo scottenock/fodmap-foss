@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Para from "../components/Para";
 
@@ -91,10 +92,21 @@ function About() {
             track or spy on you.
           </Para>
           <Para>
-            If you have found this app beneficial we encourage you to donate
-            here.
+            If you have found this app beneficial we encourage you to donate{" "}
+            <Link className="text-red-500" to="/donate">
+              here.
+            </Link>
           </Para>
-          <Para>The source code of this app is viewable here.</Para>
+          <Para>
+            The source code of this app is viewable{" "}
+            <Link
+              className="text-red-500"
+              target="_blank"
+              to="https://github.com/ScottEnock/fodmap-foss"
+            >
+              here.
+            </Link>
+          </Para>
         </section>
 
         <section className={styles.section}>
