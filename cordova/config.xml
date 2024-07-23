@@ -1,11 +1,23 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.github.scottenock" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>fodmapUi</name>
-    <description>Sample Apache Cordova App</description>
-    <author email="dev@cordova.apache.org" href="https://cordova.apache.org">
-        Apache Cordova Team
+    <name>FODMAP FOSS</name>
+    <description>A completely free and simple FODMAP food list, dieting app, for people with IBS and how are following a low FODMAP diet.</description>
+    <author email="developer@enock.ovh" href="https://github.com/ScottEnock">
+        Laputa Labs
     </author>
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+
+
+    <platform name="android">
+        <resource-file src="res/values/myColors.xml" target="/app/src/main/res/values/colors.xml" />
+
+        <icon background="@color/background" density="ldpi" foreground="res/icon/android/mipmap-ldpi/ic_launcher.png" />
+        <icon background="@color/background" density="mdpi" foreground="res/icon/android/mipmap-mdpi/ic_launcher_foreground.png" />
+        <icon background="@color/background" density="hdpi" foreground="res/icon/android/mipmap-hdpi/ic_launcher_foreground.png" />
+        <icon background="@color/background" density="xhdpi" foreground="res/icon/android/mipmap-xhdpi/ic_launcher_foreground.png" />
+        <icon background="@color/background" density="xxhdpi" foreground="res/icon/android/mipmap-xxhdpi/ic_launcher_foreground.png" />
+        <icon background="@color/background" density="xxxhdpi" foreground="res/icon/android/mipmap-xxxhdpi/ic_launcher_foreground.png" />
+    </platform>
 </widget>
