@@ -9,15 +9,16 @@
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
 
-
     <platform name="android">
         <resource-file src="res/values/myColors.xml" target="/app/src/main/res/values/colors.xml" />
 
-        <icon background="@color/background" density="ldpi" foreground="res/icon/android/mipmap-ldpi/ic_launcher.png" />
-        <icon background="@color/background" density="mdpi" foreground="res/icon/android/mipmap-mdpi/ic_launcher_foreground.png" />
-        <icon background="@color/background" density="hdpi" foreground="res/icon/android/mipmap-hdpi/ic_launcher_foreground.png" />
-        <icon background="@color/background" density="xhdpi" foreground="res/icon/android/mipmap-xhdpi/ic_launcher_foreground.png" />
-        <icon background="@color/background" density="xxhdpi" foreground="res/icon/android/mipmap-xxhdpi/ic_launcher_foreground.png" />
-        <icon background="@color/background" density="xxxhdpi" foreground="res/icon/android/mipmap-xxxhdpi/ic_launcher_foreground.png" />
+        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/drawable/ic_launcher_foreground.xml" />
+
+        <icon background="@color/background" density="ldpi" foreground="res/mipmap/mipmap-ldpi/ic_launcher.png" />
+        <icon background="@color/background" density="mdpi" foreground="res/mipmap/mipmap-mdpi/ic_launcher_foreground.png" />
+        <icon background="@color/background" density="hdpi" foreground="res/mipmap/mipmap-hdpi/ic_launcher_foreground.png" />
+        <icon background="@color/background" density="xhdpi" foreground="res/mipmap/mipmap-xhdpi/ic_launcher_foreground.png" />
+        <icon background="@color/background" density="xxhdpi" foreground="res/mipmap/mipmap-xxhdpi/ic_launcher_foreground.png" />
+        <icon background="@color/background" density="xxxhdpi" foreground="res/mipmap/mipmap-xxxhdpi/ic_launcher_foreground.png" />
     </platform>
 </widget>
