@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import Para from "../components/Para";
+import CreatedBy from "../components/CreatedBy";
 
 const styles = {
   button: "block rounded-lg w-52 bg-green-400 p-3 mb-3",
@@ -120,6 +121,8 @@ function About() {
             Please consult your physician before beginning any new diet.
           </Para>
         </section>
+
+        <CreatedBy />
       </div>
     </>
   );

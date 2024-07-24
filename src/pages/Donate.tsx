@@ -1,6 +1,7 @@
 import NavBar from "../components/NavBar";
 import Para from "../components/Para";
 import xmrQR from "../assets/xmr-qr.jpeg";
+import CreatedBy from "../components/CreatedBy";
 
 const styles = {
   button: "block rounded-lg w-52 bg-green-400 p-3 mb-3",
@@ -39,7 +40,7 @@ function Donate() {
             digital cash.
           </Para>
           <img
-            className="w-44 h-44 mx-auto"
+            className="w-44 h-44 mx-auto mb-3"
             src={xmrQR}
             alt="QR code for XMR address"
           />
@@ -57,6 +58,8 @@ function Donate() {
             <li>If you have a feature idea, tell us!</li>
           </ul>
         </section>
+
+        <CreatedBy />
       </div>
     </>
   );
