@@ -1,5 +1,5 @@
 name: Release APK
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} has triggered an Android Release
 
 on:
   pull_request:
@@ -22,9 +22,15 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build --if-present
+      - name: Decode Keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: "keystore.jks"
+          encodedString: ${{ secrets.KEYSTORE }}
       - name: build APK
         run: |
           cd cordova
           npm i -D cordova
           npx cordova platform add android@13
-          npx cordova build android
+          npx cordova build android --release -- --keystore=../keystore.jks --storePassword="$secrets.SIGNING_STORE_PASSWORD" --alias="$secrets.SIGNING_KEY_ALIAS" --password="$secrets.SIGNING_KEY_PASSWORD"
