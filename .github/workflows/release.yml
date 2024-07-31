@@ -28,9 +28,12 @@ jobs:
         with:
           fileName: "keystore.jks"
           encodedString: ${{ secrets.KEYSTORE }}
+      - name: list files
+        run: |
+          ls ./
       - name: build APK
         run: |
           cd cordova
           npm i -D cordova
           npx cordova platform add android@13
-          npx cordova build android --release -- --keystore=../keystore.jks --storePassword="$secrets.SIGNING_STORE_PASSWORD" --alias="$secrets.SIGNING_KEY_ALIAS" --password="$secrets.SIGNING_KEY_PASSWORD"
+          npx cordova build android --release -- --keystore="${{ steps.decode_keystore.outputs.filePath }}" --storePassword="${{ secrets.SIGNING_STORE_PASSWORD }}" --alias="${{ secrets.SIGNING_KEY_ALIAS }}" --password="${{ secrets.SIGNING_KEY_PASSWORD }}"
