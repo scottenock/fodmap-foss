@@ -40,7 +40,7 @@ jobs:
         run: echo "TAG_VERSION=${GITHUB_REF##*/v}" >> $GITHUB_ENV
       - name: Update config.xml
         run: |
-          xmlstarlet ed -N w="http://www.w3.org/ns/widgets" -u "/w:widget/@version" -v "${{ env.TAG_VERSION }}" cordova/config.xml > cordover/newConfig.xml
+          xmlstarlet ed -N w="http://www.w3.org/ns/widgets" -u "/w:widget/@version" -v "${{ env.TAG_VERSION }}" cordova/config.xml > cordova/newConfig.xml
           mv cordova/newConfig.xml cordova/config.xml
       - name: Commit config.xml
         run: |
