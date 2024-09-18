@@ -2,7 +2,7 @@
 <widget id="io.github.scottenock.fodmapfoss" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>FODMAP FOSS</name>
     <description>A completely free and simple FODMAP food list, dieting app, for people with IBS and how are following a low FODMAP diet.</description>
-    <author email="developer@enock.ovh" href="https://github.com/ScottEnock">
+    <author email="laputalabs@enock.ovh" href="https://github.com/ScottEnock">
         Laputa Labs
     </author>
     <content src="index.html" />
