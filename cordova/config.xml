@@ -1,25 +1,22 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget id="io.github.scottenock.fodmapfoss" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>FODMAP FOSS</name>
-    <description>A completely free and simple FODMAP food list, dieting app, for people with IBS and how are following a low FODMAP diet.</description>
-    <author email="laputalabs@enock.ovh" href="https://github.com/ScottEnock">
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" id="io.github.scottenock.fodmapfoss" version="1.0.6">
+  <name>FODMAP FOSS</name>
+  <description>A completely free and simple FODMAP food list, dieting app, for people with IBS and how are following a low FODMAP diet.</description>
+  <author email="laputalabs@enock.ovh" href="https://github.com/ScottEnock">
         Laputa Labs
     </author>
-    <content src="index.html" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <preference name="orientation" value="portrait" />
-
-    <platform name="android">
-        <resource-file src="res/values/myColors.xml" target="/app/src/main/res/values/colors.xml" />
-
-        <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/drawable/ic_launcher_foreground.xml" />
-
-        <icon background="@color/background" density="ldpi" foreground="res/mipmap/mipmap-ldpi/ic_launcher.png" />
-        <icon background="@color/background" density="mdpi" foreground="res/mipmap/mipmap-mdpi/ic_launcher_foreground.png" />
-        <icon background="@color/background" density="hdpi" foreground="res/mipmap/mipmap-hdpi/ic_launcher_foreground.png" />
-        <icon background="@color/background" density="xhdpi" foreground="res/mipmap/mipmap-xhdpi/ic_launcher_foreground.png" />
-        <icon background="@color/background" density="xxhdpi" foreground="res/mipmap/mipmap-xxhdpi/ic_launcher_foreground.png" />
-        <icon background="@color/background" density="xxxhdpi" foreground="res/mipmap/mipmap-xxxhdpi/ic_launcher_foreground.png" />
-    </platform>
+  <content src="index.html"/>
+  <allow-intent href="http://*/*"/>
+  <allow-intent href="https://*/*"/>
+  <preference name="orientation" value="portrait"/>
+  <platform name="android">
+    <resource-file src="res/values/myColors.xml" target="/app/src/main/res/values/colors.xml"/>
+    <preference name="AndroidWindowSplashScreenAnimatedIcon" value="res/drawable/ic_launcher_foreground.xml"/>
+    <icon background="@color/background" density="ldpi" foreground="res/mipmap/mipmap-ldpi/ic_launcher.png"/>
+    <icon background="@color/background" density="mdpi" foreground="res/mipmap/mipmap-mdpi/ic_launcher_foreground.png"/>
+    <icon background="@color/background" density="hdpi" foreground="res/mipmap/mipmap-hdpi/ic_launcher_foreground.png"/>
+    <icon background="@color/background" density="xhdpi" foreground="res/mipmap/mipmap-xhdpi/ic_launcher_foreground.png"/>
+    <icon background="@color/background" density="xxhdpi" foreground="res/mipmap/mipmap-xxhdpi/ic_launcher_foreground.png"/>
+    <icon background="@color/background" density="xxxhdpi" foreground="res/mipmap/mipmap-xxxhdpi/ic_launcher_foreground.png"/>
+  </platform>
 </widget>
