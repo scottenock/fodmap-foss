@@ -57,6 +57,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch
           git checkout master
           git pull
           xmlstarlet ed -N w="http://www.w3.org/ns/widgets" -u "/w:widget/@version" -v "${{ env.TAG_VERSION }}" cordova/config.xml > cordova/newConfig.xml
