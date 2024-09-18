@@ -41,9 +41,9 @@ export const AppProvider = ({
       case ACTIONS.ALPHABETICAL_ORDER:
         return { foods: alphabetical, sortOrder: "a-z" };
       case ACTIONS.HIGH_LOW_ORDER:
-        return { foods: [...high, ...low], sortOrder: "h-l" };
+        return { foods: high, sortOrder: "h-l" };
       case ACTIONS.LOW_HIGH_ORDER:
-        return { foods: [...low, ...high], sortOrder: "l-h" };
+        return { foods: low, sortOrder: "l-h" };
       default:
         return state;
     }

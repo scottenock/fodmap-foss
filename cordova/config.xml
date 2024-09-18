@@ -8,6 +8,7 @@
     <content src="index.html" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <preference name="orientation" value="portrait" />
 
     <platform name="android">
         <resource-file src="res/values/myColors.xml" target="/app/src/main/res/values/colors.xml" />

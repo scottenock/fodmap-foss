@@ -27,8 +27,8 @@ const FoodList: React.FC<FoodListProps> = ({ foods }) => {
           setLoadedItems((items) => items + incrementValue);
         }}
       >
-        {currentItems.map((food) => (
-          <div key={food.id}>
+        {currentItems.map((food, index) => (
+          <div key={`${food.id}-${index}`}>
             <Link to={`/food/${food.id}`}>
               <div className={styles.container}>
                 <div>
