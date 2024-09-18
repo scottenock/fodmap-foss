@@ -15,7 +15,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.x"
-      - uses: actions/setup-java@v4
+      - name: Use Java
+        uses: actions/setup-java@v4
         with:
           distribution: "corretto"
           java-version: "17"
@@ -28,12 +29,14 @@ jobs:
         with:
           fileName: "keystore.jks"
           encodedString: ${{ secrets.KEYSTORE }}
-      - name: list files
-        run: |
-          ls ./
       - name: build APK
         run: |
           cd cordova
           npm i -D cordova
           npx cordova platform add android@13
           npx cordova build android --release -- --keystore="${{ steps.decode_keystore.outputs.filePath }}" --storePassword="${{ secrets.SIGNING_STORE_PASSWORD }}" --alias="${{ secrets.SIGNING_KEY_ALIAS }}" --password="${{ secrets.SIGNING_KEY_PASSWORD }}"
+      - name: Upload Release Build
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: cordova/platforms/android/app/build/outputs/bundle/release/app-release.aab
