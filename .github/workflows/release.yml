@@ -46,7 +46,7 @@ jobs:
         run: |
           cd cordova
           npm i -D cordova
-          npx cordova platform add android@13
+          npx cordova platform add android@latest
           npx cordova build android --release -- --keystore="${{ steps.decode_keystore.outputs.filePath }}" --storePassword="${{ secrets.SIGNING_STORE_PASSWORD }}" --alias="${{ secrets.SIGNING_KEY_ALIAS }}" --password="${{ secrets.SIGNING_KEY_PASSWORD }}"
       - name: Upload Release Build
         uses: softprops/action-gh-release@v2
