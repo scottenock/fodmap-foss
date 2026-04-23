@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import fodmap from "../data/fodmap";
 import NavBar from "../components/NavBar";
 import Score from "../components/Score";
+import StarButton from "../components/StarButton";
+import AppContext, { ACTIONS } from "../context/AppContext";
 
 const styles = {
   container: "p-3 flex my-1 shadow-md mb-2 justify-between",
@@ -16,18 +19,28 @@ const fodmapRating = (score?: number) => {
 
 function FoodDetail() {
   const { id } = useParams();
+  const { state, dispatch } = useContext(AppContext);
   const food = fodmap.find((f) => f.id === id);
 
   if (!food) return null;
 
   const ratingColour = food.fodmap === "high" ? "bg-red-500" : "bg-green-300";
+  const isFavorited = state.favorites.includes(food.id);
 
   return (
     <div>
       <NavBar goesHome={false} />
       <section className={styles.container}>
         <div>
-          <p className="text-3xl">{food.name}</p>
+          <div className="flex items-center gap-2">
+            <p className="text-3xl">{food.name}</p>
+            <StarButton
+              isFavorited={isFavorited}
+              onToggle={() =>
+                dispatch({ type: ACTIONS.TOGGLE_FAVORITE, payload: food.id })
+              }
+            />
+          </div>
           <p className="text-base">{food.category}</p>
           <p className="text-base">Max Quantity: {food.qty ?? "unspecified"}</p>
         </div>

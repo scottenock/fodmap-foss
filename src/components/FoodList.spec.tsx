@@ -1,8 +1,9 @@
-import FoodList from "./FoodList";
-import { describe, expect, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { Fodmap } from "../types/Fodmap";
 import { MemoryRouter } from "react-router-dom";
+import { describe, expect, test } from "vitest";
+import { Fodmap } from "../types/Fodmap";
+import { AppProvider } from "../context/AppContext";
+import FoodList from "./FoodList";
 
 const items: Fodmap[] = [
   {
@@ -24,9 +25,11 @@ const items: Fodmap[] = [
 describe("FoodList", () => {
   test("component renders expected text", () => {
     render(
-      <MemoryRouter>
-        <FoodList foods={items} />
-      </MemoryRouter>
+      <AppProvider initialState={{ sortOrder: "a-z", favorites: [] }}>
+        <MemoryRouter>
+          <FoodList foods={items} />
+        </MemoryRouter>
+      </AppProvider>
     );
 
     expect(screen.getByText("apples")).toBeInTheDocument();
@@ -39,14 +42,45 @@ describe("FoodList", () => {
 
   test("list items have the expected anchor tags", () => {
     render(
-      <MemoryRouter>
-        <FoodList foods={items} />
-      </MemoryRouter>
+      <AppProvider initialState={{ sortOrder: "a-z", favorites: [] }}>
+        <MemoryRouter>
+          <FoodList foods={items} />
+        </MemoryRouter>
+      </AppProvider>
     );
 
     const links = screen.getAllByRole("link");
-
     expect(links[0]).toHaveAttribute("href", "/food/1");
     expect(links[1]).toHaveAttribute("href", "/food/2");
+  });
+
+  test("renders star buttons for each food item", () => {
+    render(
+      <AppProvider initialState={{ sortOrder: "a-z", favorites: [] }}>
+        <MemoryRouter>
+          <FoodList foods={items} />
+        </MemoryRouter>
+      </AppProvider>
+    );
+
+    const stars = screen.getAllByRole("button", { name: "Add to favorites" });
+    expect(stars).toHaveLength(2);
+  });
+
+  test("renders a filled star for favorited items", () => {
+    render(
+      <AppProvider initialState={{ sortOrder: "a-z", favorites: ["1"] }}>
+        <MemoryRouter>
+          <FoodList foods={items} />
+        </MemoryRouter>
+      </AppProvider>
+    );
+
+    expect(
+      screen.getByRole("button", { name: "Remove from favorites" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Add to favorites" })
+    ).toBeInTheDocument();
   });
 });
