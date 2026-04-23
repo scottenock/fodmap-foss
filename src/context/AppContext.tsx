@@ -1,8 +1,4 @@
 import { Dispatch, createContext, useReducer } from "react";
-import alphabetical from "../data/alphabetical";
-import high from "../data/high";
-import low from "../data/low";
-import { Fodmap } from "../types/Fodmap";
 
 type AppProvider = {
   children: React.ReactNode;
@@ -15,7 +11,6 @@ type ActionProps = {
 };
 
 type AppState = {
-  foods: Fodmap[];
   sortOrder: string;
 };
 
@@ -30,7 +25,7 @@ export enum ACTIONS {
   LOW_HIGH_ORDER = "LOW_HIGH_ORDER",
 }
 
-const defaultState: AppState = { foods: alphabetical, sortOrder: "a-z" };
+const defaultState: AppState = { sortOrder: "a-z" };
 
 export const AppProvider = ({
   children,
@@ -39,11 +34,11 @@ export const AppProvider = ({
   const reducer = (state: AppState, action: ActionProps) => {
     switch (action.type) {
       case ACTIONS.ALPHABETICAL_ORDER:
-        return { foods: alphabetical, sortOrder: "a-z" };
+        return { sortOrder: "a-z" };
       case ACTIONS.HIGH_LOW_ORDER:
-        return { foods: high, sortOrder: "h-l" };
+        return { sortOrder: "h-l" };
       case ACTIONS.LOW_HIGH_ORDER:
-        return { foods: low, sortOrder: "l-h" };
+        return { sortOrder: "l-h" };
       default:
         return state;
     }

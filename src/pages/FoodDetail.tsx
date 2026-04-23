@@ -1,29 +1,29 @@
-import { Fodmap } from "../types/Fodmap";
-import NavBar from "./NavBar";
-import Score from "./Score";
-
-type FoodItemProps = {
-  food: Fodmap;
-};
+import { useParams } from "react-router-dom";
+import fodmap from "../data/fodmap";
+import NavBar from "../components/NavBar";
+import Score from "../components/Score";
 
 const styles = {
   container: "p-3 flex my-1 shadow-md mb-2 justify-between",
 };
 
 const fodmapRating = (score?: number) => {
-  let rating = "N/A";
-  rating = score === 0 ? "Low" : rating;
-  rating = score === 1 ? "Medium" : rating;
-  rating = score === 2 ? "High" : rating;
-
-  return rating;
+  if (score === 0) return "Low";
+  if (score === 1) return "Medium";
+  if (score === 2) return "High";
+  return "N/A";
 };
 
-const FoodItem: React.FC<FoodItemProps> = ({ food }) => {
+function FoodDetail() {
+  const { id } = useParams();
+  const food = fodmap.find((f) => f.id === id);
+
+  if (!food) return null;
+
   const ratingColour = food.fodmap === "high" ? "bg-red-500" : "bg-green-300";
 
   return (
-    <div className="">
+    <div>
       <NavBar goesHome={false} />
       <section className={styles.container}>
         <div>
@@ -65,6 +65,6 @@ const FoodItem: React.FC<FoodItemProps> = ({ food }) => {
       </section>
     </div>
   );
-};
+}
 
-export default FoodItem;
+export default FoodDetail;

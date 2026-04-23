@@ -2,7 +2,7 @@ import { HashRouter, Route, Routes } from "react-router-dom";
 import { AppProvider } from "./context/AppContext";
 import About from "./pages/About";
 import Donate from "./pages/Donate";
-import FoodInfo from "./pages/FoodInfo";
+import FoodDetail from "./pages/FoodDetail";
 import Foods from "./pages/Foods";
 import Home from "./pages/Home";
 
@@ -16,7 +16,7 @@ function App() {
             <Route path="/about" Component={About} />
             <Route path="/donate" Component={Donate} />
             <Route path="/food" Component={Foods} />
-            <Route path="/food/:id" Component={FoodInfo} />
+            <Route path="/food/:id" Component={FoodDetail} />
           </Routes>
         </HashRouter>
       </AppProvider>

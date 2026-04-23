@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import Para from "../components/Para";
 import CreatedBy from "../components/CreatedBy";
 
 const styles = {
-  button: "block rounded-lg w-52 bg-green-400 p-3 mb-3",
   section: "mb-5",
 };
 
@@ -15,30 +13,30 @@ function About() {
       <div className="p-3">
         <section className={styles.section}>
           <h1 className="font-bold text-lg mb-4">About FODMAPs</h1>
-          <Para>
+          <p className="mb-3">
             FODMAPs are short chain carbohydrates (sugars) that are poorly
             absorbed by the small intestine.
-          </Para>
-          <Para>
+          </p>
+          <p className="mb-3">
             The low FODMAP diet is designed to help manage symptoms of irritable
             bowel syndrome (IBS) and other functional gastrointestinal
             disorders. It involves restricting foods high in certain fermentable
             carbohydrates:
-          </Para>
+          </p>
           <div className="mb-4">
-            <Para className="font-medium">Oligos</Para>
+            <p className="mb-3 font-medium">Oligos</p>
             <div className="border-b-2 border-gray-300 mb-2" />
-            <Para className="font-medium">Lactose</Para>
+            <p className="mb-3 font-medium">Lactose</p>
             <div className="border-b-2 border-gray-300 mb-2" />
-            <Para className="font-medium">Fructose</Para>
+            <p className="mb-3 font-medium">Fructose</p>
             <div className="border-b-2 border-gray-300 mb-2" />
-            <Para className="font-medium">Polyols</Para>
+            <p className="mb-3 font-medium">Polyols</p>
             <div className="border-b-2 border-gray-300 mb-2" />
           </div>
-          <Para className="font-medium mb-3">
+          <p className="mb-3 font-medium">
             Each food is categorized into the following two groups depending on
             their concentrations of the above carbohydrates:
-          </Para>
+          </p>
 
           <div className="mb-3">
             <div className="flex items-center my-1">
@@ -71,7 +69,7 @@ function About() {
           <h2 className="font-bold text-lg mb-4">
             Three Steps of The FODMAP Diet
           </h2>
-          <Para>The low FODMAP is a three-step elimination diet:</Para>
+          <p className="mb-3">The low FODMAP is a three-step elimination diet:</p>
           <ol className="list-decimal list-inside">
             <li className="mb-1">
               Stop eating certain foods that are HIGH FODMAP
@@ -88,17 +86,17 @@ function About() {
 
         <section className={styles.section}>
           <h2 className="font-bold text-lg mb-4">Support the Project</h2>
-          <Para>
+          <p className="mb-3">
             This app is FOSS (Free and Open Source Software), which doesn't
             track or spy on you.
-          </Para>
-          <Para>
+          </p>
+          <p className="mb-3">
             If you have found this app beneficial we encourage you to donate{" "}
             <Link className="text-red-500" to="/donate">
               here.
             </Link>
-          </Para>
-          <Para>
+          </p>
+          <p className="mb-3">
             The source code of this app is viewable{" "}
             <Link
               className="text-red-500"
@@ -107,19 +105,19 @@ function About() {
             >
               here.
             </Link>
-          </Para>
+          </p>
         </section>
 
         <section className={styles.section}>
           <h2 className="font-bold text-lg mb-4">Disclaimer</h2>
-          <Para>
+          <p className="mb-3">
             We do not perform any testing ourselves. The data provided is
             compiled from several different sources, and should be used as a
             guideline not as a basis of fact.
-          </Para>
-          <Para>
+          </p>
+          <p className="mb-3">
             Please consult your physician before beginning any new diet.
-          </Para>
+          </p>
         </section>
 
         <CreatedBy />

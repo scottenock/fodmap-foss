@@ -1,10 +1,8 @@
 import NavBar from "../components/NavBar";
-import Para from "../components/Para";
 import xmrQR from "../assets/xmr-qr.jpeg";
 import CreatedBy from "../components/CreatedBy";
 
 const styles = {
-  button: "block rounded-lg w-52 bg-green-400 p-3 mb-3",
   section: "mb-5",
 };
 
@@ -15,30 +13,30 @@ function Donate() {
       <div className="p-3">
         <section className={styles.section}>
           <h2 className="font-bold text-lg mb-4">Support the Project</h2>
-          <Para>
+          <p className="mb-3">
             This app is FOSS (Free and Open Source Software), which doesn't
             track or spy on you.
-          </Para>
-          <Para>
+          </p>
+          <p className="mb-3">
             If you have found this app beneficial we encourage you to donate
-          </Para>
-          <Para>
+          </p>
+          <p className="mb-3">
             We, Laputa Labs, the company which originally created FODMAP FOSS,
             have decided to make FODMAP FOSS free and open-source software
             (FOSS) because we believe in the openness of the Internet and we
             want to be a counterpart to all the ones who want to force people to
             store their private data in "the cloud" (say: other people's
             computers), using proprietary standards.
-          </Para>
+          </p>
         </section>
         <section className={styles.section}>
           <h2 className="font-bold text-lg mb-4">Donate via Monero (XMR)</h2>
-          <Para>
+          <p className="mb-3">
             We currently accept donations via the cryptocurrency: Monero. Like
             cash, Monero is fungible, preserves user privacy, and is censorship
             resistant. Making it the easiest way to transact, think of it as
             digital cash.
-          </Para>
+          </p>
           <img
             className="w-44 h-44 mx-auto mb-3"
             src={xmrQR}
@@ -51,7 +49,7 @@ function Donate() {
 
         <section className={styles.section}>
           <h2 className="font-bold text-lg mb-4">Other Ways to Support</h2>
-          <Para>If you want to help the project, here are some ideas:</Para>
+          <p className="mb-3">If you want to help the project, here are some ideas:</p>
           <ul className="list-disc list-inside">
             <li>Tell your friend's about the project</li>
             <li>Give us a star on Github</li>

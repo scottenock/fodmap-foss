@@ -1,26 +1,23 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import FoodList from "../components/FoodList";
-import FoodListFilter from "../components/FoodListFilter";
-import FoodListSearch from "../components/FoodListSearch";
-import AppContext from "../context/AppContext";
-import { Fodmap } from "../types/Fodmap";
+import SortTabs from "../components/SortTabs";
+import SearchInput from "../components/SearchInput";
 import NavBar from "../components/NavBar";
+import AppContext from "../context/AppContext";
+import { useFoodList } from "../hooks/useFoodList";
 
 function Foods() {
   const { state } = useContext(AppContext);
-  const [foodsToRender, setFoodsToRender] = useState<Fodmap[]>(state.foods);
-
-  useEffect(() => {
-    setFoodsToRender(state.foods);
-  }, [state.foods]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const foods = useFoodList(state.sortOrder, searchTerm);
 
   return (
     <>
       <NavBar className="!py-3">
-        <FoodListSearch foods={state.foods} setFoods={setFoodsToRender} />
+        <SearchInput value={searchTerm} onChange={setSearchTerm} />
       </NavBar>
-      <FoodListFilter />
-      <FoodList foods={foodsToRender} />
+      <SortTabs />
+      <FoodList foods={foods} />
     </>
   );
 }
