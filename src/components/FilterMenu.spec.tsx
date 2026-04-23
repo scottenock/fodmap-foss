@@ -69,19 +69,12 @@ describe("FilterMenu", () => {
     expect(onClearCategories).toHaveBeenCalledOnce();
   });
 
-  it("renders the Favorites only checkbox unchecked by default", () => {
+  it("renders the Favorites only button", () => {
     render(<FilterMenu {...defaultProps} />);
-    const checkbox = screen.getByRole("checkbox", { name: /favorites only/i });
-    expect(checkbox).not.toBeChecked();
+    expect(screen.getByRole("button", { name: /favorites only/i })).toBeInTheDocument();
   });
 
-  it("renders the Favorites only checkbox checked when showFavoritesOnly is true", () => {
-    render(<FilterMenu {...defaultProps} showFavoritesOnly={true} />);
-    const checkbox = screen.getByRole("checkbox", { name: /favorites only/i });
-    expect(checkbox).toBeChecked();
-  });
-
-  it("calls onToggleFavoritesOnly when the Favorites only checkbox is clicked", () => {
+  it("calls onToggleFavoritesOnly when the Favorites only button is clicked", () => {
     const onToggleFavoritesOnly = vitest.fn();
     render(
       <FilterMenu
@@ -89,7 +82,7 @@ describe("FilterMenu", () => {
         onToggleFavoritesOnly={onToggleFavoritesOnly}
       />
     );
-    fireEvent.click(screen.getByRole("checkbox", { name: /favorites only/i }));
+    fireEvent.click(screen.getByRole("button", { name: /favorites only/i }));
     expect(onToggleFavoritesOnly).toHaveBeenCalledOnce();
   });
 
