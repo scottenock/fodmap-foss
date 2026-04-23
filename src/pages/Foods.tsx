@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
 import FoodList from "../components/FoodList";
 import FilterMenu from "../components/FilterMenu";
 import SearchInput from "../components/SearchInput";
@@ -17,9 +18,13 @@ const sortActionMap: Record<string, string> = {
 
 function Foods() {
   const { state, dispatch } = useContext(AppContext);
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(
+    (location.state as { showFavoritesOnly?: boolean } | null)
+      ?.showFavoritesOnly ?? false
+  );
   const [filterOpen, setFilterOpen] = useState(false);
   const foods = useFoodList(
     state.sortOrder,
