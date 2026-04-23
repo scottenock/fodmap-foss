@@ -10,11 +10,28 @@ const sortedData: Record<string, Fodmap[]> = {
   "l-h": low,
 };
 
-export function useFoodList(sortOrder: string, searchTerm: string): Fodmap[] {
+export function useFoodList(
+  sortOrder: string,
+  searchTerm: string,
+  selectedCategories: string[],
+  favorites: string[] = [],
+  showFavoritesOnly: boolean = false
+): Fodmap[] {
   return useMemo(() => {
     const base = sortedData[sortOrder] ?? alphabetical;
-    if (!searchTerm) return base;
-    const lower = searchTerm.toLowerCase();
-    return base.filter((food) => food.name.toLowerCase().includes(lower));
-  }, [sortOrder, searchTerm]);
+    if (!searchTerm && selectedCategories.length === 0 && !showFavoritesOnly)
+      return base;
+    const lowerSearch = searchTerm.toLowerCase();
+    return base.filter((food) => {
+      if (showFavoritesOnly && !favorites.includes(food.id)) return false;
+      if (searchTerm && !food.name.toLowerCase().includes(lowerSearch))
+        return false;
+      if (
+        selectedCategories.length > 0 &&
+        !selectedCategories.includes(food.category)
+      )
+        return false;
+      return true;
+    });
+  }, [sortOrder, searchTerm, selectedCategories, favorites, showFavoritesOnly]);
 }
