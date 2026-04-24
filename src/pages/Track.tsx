@@ -51,9 +51,11 @@ function Track() {
   };
 
   if (addingToMeal) {
+    const existingFoodIds = dayMeals[addingToMeal].map((e) => e.foodId);
     return (
       <FoodPicker
         meal={mealLabel[addingToMeal]}
+        existingFoodIds={existingFoodIds}
         onSelect={handleSelectFood}
         onClose={() => setAddingToMeal(null)}
       />

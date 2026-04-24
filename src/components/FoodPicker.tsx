@@ -8,6 +8,7 @@ import leftArrow from "../icons/arrow-left-solid.svg";
 
 type FoodPickerProps = {
   meal: string;
+  existingFoodIds?: string[];
   onSelect: (food: Fodmap, quantity: number) => void;
   onClose: () => void;
 };
@@ -15,12 +16,13 @@ type FoodPickerProps = {
 const QUANTITY_LABELS = ["Tiny", "Small", "Medium", "Large", "Loads"];
 const incrementValue = 25;
 
-const FoodPicker: React.FC<FoodPickerProps> = ({ meal, onSelect, onClose }) => {
+const FoodPicker: React.FC<FoodPickerProps> = ({ meal, existingFoodIds = [], onSelect, onClose }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [loadedItems, setLoadedItems] = useState(incrementValue);
   const [selectedFood, setSelectedFood] = useState<Fodmap | null>(null);
   const [quantity, setQuantity] = useState(3);
-  const foods = useFoodList("a-z", searchTerm, []);
+  const allFoods = useFoodList("a-z", searchTerm, []);
+  const foods = allFoods.filter((f) => !existingFoodIds.includes(f.id));
   const currentItems = foods.slice(0, loadedItems);
 
   const handleFoodTap = (food: Fodmap) => {
