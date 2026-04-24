@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import NavBar from "../components/NavBar";
+import MonthCalendar from "../components/MonthCalendar";
 import DateNav from "../components/DateNav";
 import PillButton from "../components/PillButton";
 import FoodPicker from "../components/FoodPicker";
@@ -65,6 +66,11 @@ function Track() {
   return (
     <div>
       <NavBar />
+      <MonthCalendar
+        selectedDate={selectedDate}
+        onSelectDate={setSelectedDate}
+        maxDate={today}
+      />
       <DateNav
         date={selectedDate}
         onPrevDay={() => setSelectedDate((d) => adjustDate(d, -1))}
