@@ -1,16 +1,24 @@
 import { useEffect, useState } from "react";
+import { MealLog } from "../context/AppContext";
 
 type MonthCalendarProps = {
   selectedDate: string;
   onSelectDate: (date: string) => void;
   maxDate: string;
+  meals?: MealLog;
 };
 
 const DAY_LABELS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
+const MEAL_DOTS: { meal: "breakfast" | "lunch" | "dinner"; color: string }[] = [
+  { meal: "breakfast", color: "bg-yellow-400" },
+  { meal: "lunch",     color: "bg-orange-400" },
+  { meal: "dinner",    color: "bg-indigo-400" },
+];
+
 const parseDate = (dateStr: string) => dateStr.split("-").map(Number) as [number, number, number];
 
-const MonthCalendar: React.FC<MonthCalendarProps> = ({ selectedDate, onSelectDate, maxDate }) => {
+const MonthCalendar: React.FC<MonthCalendarProps> = ({ selectedDate, onSelectDate, maxDate, meals = {} }) => {
   const [selYear, selMonth] = parseDate(selectedDate);
   const [viewYear, setViewYear] = useState(selYear);
   const [viewMonth, setViewMonth] = useState(selMonth);
@@ -53,15 +61,15 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({ selectedDate, onSelectDat
     return sy === viewYear && sm === viewMonth && sd === day;
   };
 
+  const dayKey = (day: number) =>
+    `${viewYear}-${String(viewMonth).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
   const handleDayClick = (day: number) => {
     if (isDisabled(day)) return;
-    const dateStr = `${viewYear}-${String(viewMonth).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-    onSelectDate(dateStr);
+    onSelectDate(dayKey(day));
   };
 
-  const monthName = new Date(viewYear, viewMonth - 1, 1).toLocaleString("default", {
-    month: "long",
-  });
+  const monthName = new Date(viewYear, viewMonth - 1, 1).toLocaleString("default", { month: "long" });
 
   const cells: (number | null)[] = [
     ...Array.from({ length: firstDayOfWeek }, () => null),
@@ -104,12 +112,23 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({ selectedDate, onSelectDat
               key={day}
               onClick={() => handleDayClick(day)}
               disabled={isDisabled(day)}
-              className={`mx-auto flex items-center justify-center w-8 h-8 rounded-full text-sm transition-colors
-                ${isSelected(day) ? "bg-green-400 text-white font-semibold" : ""}
-                ${isDisabled(day) ? "text-gray-300 cursor-default" : !isSelected(day) ? "text-gray-700 active:bg-gray-100" : ""}
-              `}
+              className="mx-auto flex flex-col items-center gap-0.5"
             >
-              {day}
+              <span
+                className={`flex items-center justify-center w-8 h-8 rounded-full text-sm transition-colors
+                  ${isSelected(day) ? "bg-green-400 text-white font-semibold" : ""}
+                  ${isDisabled(day) ? "text-gray-300 cursor-default" : !isSelected(day) ? "text-gray-700 active:bg-gray-100" : ""}
+                `}
+              >
+                {day}
+              </span>
+              <span className="flex gap-0.5 h-1.5">
+                {MEAL_DOTS.map(({ meal, color }) =>
+                  meals[dayKey(day)]?.[meal]?.length > 0 ? (
+                    <span key={meal} className={`w-1.5 h-1.5 rounded-full ${color}`} />
+                  ) : null
+                )}
+              </span>
             </button>
           )
         )}

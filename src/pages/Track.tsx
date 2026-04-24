@@ -70,6 +70,7 @@ function Track() {
         selectedDate={selectedDate}
         onSelectDate={setSelectedDate}
         maxDate={today}
+        meals={state.meals}
       />
       <DateNav
         date={selectedDate}
