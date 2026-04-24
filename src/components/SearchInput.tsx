@@ -1,9 +1,10 @@
 type SearchInputProps = {
   value: string;
   onChange: (value: string) => void;
+  autoFocus?: boolean;
 };
 
-const SearchInput: React.FC<SearchInputProps> = ({ value, onChange }) => {
+const SearchInput: React.FC<SearchInputProps> = ({ value, onChange, autoFocus = false }) => {
   return (
     <input
       placeholder="search..."
@@ -11,6 +12,7 @@ const SearchInput: React.FC<SearchInputProps> = ({ value, onChange }) => {
       type="text"
       value={value}
       onChange={(e) => onChange(e.target.value)}
+      autoFocus={autoFocus}
     />
   );
 };

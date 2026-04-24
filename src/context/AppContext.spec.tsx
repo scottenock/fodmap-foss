@@ -16,7 +16,7 @@ const MockPage = () => {
       <button onClick={() => dispatch({ type: ACTIONS.LOW_HIGH_ORDER })}>LOW-HIGH</button>
       <button onClick={() => dispatch({ type: ACTIONS.LOG_FOOD, payload: { id: "food-1", date } })}>LOG</button>
       <button onClick={() => dispatch({ type: ACTIONS.UNLOG_FOOD, payload: { id: "food-1", date } })}>UNLOG</button>
-      <button onClick={() => dispatch({ type: ACTIONS.ADD_MEAL_FOOD, payload: { date, meal: "breakfast", foodId: "food-1" } })}>ADD MEAL</button>
+      <button onClick={() => dispatch({ type: ACTIONS.ADD_MEAL_FOOD, payload: { date, meal: "breakfast", foodId: "food-1", quantity: 3 } })}>ADD MEAL</button>
       <button onClick={() => dispatch({ type: ACTIONS.REMOVE_MEAL_FOOD, payload: { date, meal: "breakfast", index: 0 } })}>REMOVE MEAL</button>
       <p>Sort Order: {state.sortOrder}</p>
       <p>Log count: {logCount}</p>
@@ -81,7 +81,7 @@ describe("AppContext", () => {
 
   it("removes a food from a meal when REMOVE_MEAL_FOOD is dispatched", () => {
     render(
-      <AppProvider initialState={{ ...baseState, meals: { [date]: { breakfast: ["food-1"], lunch: [], dinner: [] } } }}>
+      <AppProvider initialState={{ ...baseState, meals: { [date]: { breakfast: [{ foodId: "food-1", quantity: 3 }], lunch: [], dinner: [] } } }}>
         <MockPage />
       </AppProvider>
     );

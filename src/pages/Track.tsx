@@ -3,9 +3,12 @@ import NavBar from "../components/NavBar";
 import DateNav from "../components/DateNav";
 import PillButton from "../components/PillButton";
 import FoodPicker from "../components/FoodPicker";
+import Score from "../components/Score";
 import AppContext, { ACTIONS, MealType } from "../context/AppContext";
 import { Fodmap } from "../types/Fodmap";
 import fodmap from "../data/fodmap";
+
+const QUANTITY_LABELS = ["Tiny", "Small", "Medium", "Large", "Loads"];
 
 const toDateString = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -38,11 +41,11 @@ function Track() {
     dinner: [],
   };
 
-  const handleSelectFood = (food: Fodmap) => {
+  const handleSelectFood = (food: Fodmap, quantity: number) => {
     if (!addingToMeal) return;
     dispatch({
       type: ACTIONS.ADD_MEAL_FOOD,
-      payload: { date: selectedDate, meal: addingToMeal, foodId: food.id },
+      payload: { date: selectedDate, meal: addingToMeal, foodId: food.id, quantity },
     });
     setAddingToMeal(null);
   };
@@ -70,7 +73,7 @@ function Track() {
         {meals.map((meal) => (
           <section key={meal} className="mb-5">
             <h2 className="font-semibold text-base mb-2">{mealLabel[meal]}</h2>
-            {dayMeals[meal].map((foodId, i) => {
+            {dayMeals[meal].map(({ foodId, quantity }, i) => {
               const food = fodmap.find((f) => f.id === foodId);
               if (!food) return null;
               return (
@@ -80,20 +83,29 @@ function Track() {
                 >
                   <div>
                     <p className="text-base">{food.name}</p>
-                    <p className="text-sm text-gray-400">{food.category}</p>
+                    <p className="text-sm text-gray-400">
+                      {food.category} · {QUANTITY_LABELS[quantity - 1]}
+                    </p>
                   </div>
-                  <button
-                    onClick={() =>
-                      dispatch({
-                        type: ACTIONS.REMOVE_MEAL_FOOD,
-                        payload: { date: selectedDate, meal, index: i },
-                      })
-                    }
-                    aria-label={`Remove ${food.name}`}
-                    className="p-2 text-gray-400 text-xl leading-none"
-                  >
-                    ×
-                  </button>
+                  <div className="flex items-center gap-3">
+                    <Score
+                      text={food.fodmap}
+                      score={food.fodmap === "high" ? 2 : 0}
+                      reversed={true}
+                    />
+                    <button
+                      onClick={() =>
+                        dispatch({
+                          type: ACTIONS.REMOVE_MEAL_FOOD,
+                          payload: { date: selectedDate, meal, index: i },
+                        })
+                      }
+                      aria-label={`Remove ${food.name}`}
+                      className="p-2 text-gray-400 text-xl leading-none"
+                    >
+                      ×
+                    </button>
+                  </div>
                 </div>
               );
             })}

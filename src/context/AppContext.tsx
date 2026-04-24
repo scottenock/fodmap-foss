@@ -14,7 +14,8 @@ type DayLog = Record<string, number>;
 export type FoodLog = Record<string, DayLog>;
 
 export type MealType = "breakfast" | "lunch" | "dinner";
-type DayMeals = Record<MealType, string[]>;
+export type MealEntry = { foodId: string; quantity: number };
+type DayMeals = Record<MealType, MealEntry[]>;
 export type MealLog = Record<string, DayMeals>;
 
 type AppState = {
@@ -49,6 +50,25 @@ const defaultState: AppState = {
   meals: {},
 };
 
+const migrateMeals = (raw: unknown): MealLog => {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return {};
+  const result: MealLog = {};
+  for (const [date, dayMeals] of Object.entries(raw as Record<string, unknown>)) {
+    if (!dayMeals || typeof dayMeals !== "object") continue;
+    const migrated = emptyDayMeals();
+    for (const mealType of ["breakfast", "lunch", "dinner"] as MealType[]) {
+      const entries = (dayMeals as Record<string, unknown>)[mealType];
+      if (Array.isArray(entries)) {
+        migrated[mealType] = entries.map((e) =>
+          typeof e === "string" ? { foodId: e, quantity: 3 } : (e as MealEntry)
+        );
+      }
+    }
+    result[date] = migrated;
+  }
+  return result;
+};
+
 const loadState = (): AppState => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -62,10 +82,7 @@ const loadState = (): AppState => {
         parsed.log && typeof parsed.log === "object" && !Array.isArray(parsed.log)
           ? (parsed.log as FoodLog)
           : {},
-      meals:
-        parsed.meals && typeof parsed.meals === "object" && !Array.isArray(parsed.meals)
-          ? (parsed.meals as MealLog)
-          : {},
+      meals: migrateMeals(parsed.meals),
     };
   } catch {
     return defaultState;
@@ -130,17 +147,18 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
         };
       }
       case ACTIONS.ADD_MEAL_FOOD: {
-        const { date, meal, foodId } = action.payload as {
+        const { date, meal, foodId, quantity } = action.payload as {
           date: string;
           meal: MealType;
           foodId: string;
+          quantity: number;
         };
         const dayMeals = state.meals[date] ?? emptyDayMeals();
         return {
           ...state,
           meals: {
             ...state.meals,
-            [date]: { ...dayMeals, [meal]: [...dayMeals[meal], foodId] },
+            [date]: { ...dayMeals, [meal]: [...dayMeals[meal], { foodId, quantity }] },
           },
         };
       }
