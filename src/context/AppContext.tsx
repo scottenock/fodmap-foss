@@ -11,13 +11,17 @@ type ActionProps = {
 };
 
 type DayLog = Record<string, number>;
-
 export type FoodLog = Record<string, DayLog>;
+
+export type MealType = "breakfast" | "lunch" | "dinner";
+type DayMeals = Record<MealType, string[]>;
+export type MealLog = Record<string, DayMeals>;
 
 type AppState = {
   sortOrder: string;
   favorites: string[];
   log: FoodLog;
+  meals: MealLog;
 };
 
 type ContextProps = {
@@ -32,11 +36,18 @@ export enum ACTIONS {
   TOGGLE_FAVORITE = "TOGGLE_FAVORITE",
   LOG_FOOD = "LOG_FOOD",
   UNLOG_FOOD = "UNLOG_FOOD",
+  ADD_MEAL_FOOD = "ADD_MEAL_FOOD",
+  REMOVE_MEAL_FOOD = "REMOVE_MEAL_FOOD",
 }
 
 const STORAGE_KEY = "fodmap-foss";
 
-const defaultState: AppState = { sortOrder: "a-z", favorites: [], log: {} };
+const defaultState: AppState = {
+  sortOrder: "a-z",
+  favorites: [],
+  log: {},
+  meals: {},
+};
 
 const loadState = (): AppState => {
   try {
@@ -48,16 +59,24 @@ const loadState = (): AppState => {
         ? (parsed.favorites as string[])
         : [],
       log:
-        parsed.log &&
-        typeof parsed.log === "object" &&
-        !Array.isArray(parsed.log)
+        parsed.log && typeof parsed.log === "object" && !Array.isArray(parsed.log)
           ? (parsed.log as FoodLog)
+          : {},
+      meals:
+        parsed.meals && typeof parsed.meals === "object" && !Array.isArray(parsed.meals)
+          ? (parsed.meals as MealLog)
           : {},
     };
   } catch {
     return defaultState;
   }
 };
+
+const emptyDayMeals = (): DayMeals => ({
+  breakfast: [],
+  lunch: [],
+  dinner: [],
+});
 
 export const AppProvider = ({ children, initialState }: AppProvider) => {
   const reducer = (state: AppState, action: ActionProps) => {
@@ -104,8 +123,48 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
         }
         return {
           ...state,
-          log: { ...state.log, [date]: { ...dayLog, [id]: currentCount - 1 } },
+          log: {
+            ...state.log,
+            [date]: { ...dayLog, [id]: currentCount - 1 },
+          },
         };
+      }
+      case ACTIONS.ADD_MEAL_FOOD: {
+        const { date, meal, foodId } = action.payload as {
+          date: string;
+          meal: MealType;
+          foodId: string;
+        };
+        const dayMeals = state.meals[date] ?? emptyDayMeals();
+        return {
+          ...state,
+          meals: {
+            ...state.meals,
+            [date]: { ...dayMeals, [meal]: [...dayMeals[meal], foodId] },
+          },
+        };
+      }
+      case ACTIONS.REMOVE_MEAL_FOOD: {
+        const { date, meal, index } = action.payload as {
+          date: string;
+          meal: MealType;
+          index: number;
+        };
+        const dayMeals = state.meals[date] ?? emptyDayMeals();
+        const updatedMeal = [
+          ...dayMeals[meal].slice(0, index),
+          ...dayMeals[meal].slice(index + 1),
+        ];
+        const newDayMeals = { ...dayMeals, [meal]: updatedMeal };
+        const isEmpty = Object.values(newDayMeals).every(
+          (arr) => arr.length === 0
+        );
+        const newMeals = isEmpty
+          ? Object.fromEntries(
+              Object.entries(state.meals).filter(([k]) => k !== date)
+            )
+          : { ...state.meals, [date]: newDayMeals };
+        return { ...state, meals: newMeals };
       }
       default:
         return state;
@@ -121,9 +180,13 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
   useEffect(() => {
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({ favorites: state.favorites, log: state.log })
+      JSON.stringify({
+        favorites: state.favorites,
+        log: state.log,
+        meals: state.meals,
+      })
     );
-  }, [state.favorites, state.log]);
+  }, [state.favorites, state.log, state.meals]);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

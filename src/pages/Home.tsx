@@ -14,6 +14,9 @@ function Home() {
       <Link to="/food">
         <button className={styles.button}>Search</button>
       </Link>
+      <Link to="/track">
+        <button className={styles.button}>Track</button>
+      </Link>
       <Link to="/food" state={{ showFavoritesOnly: true }}>
         <button className={styles.button}>Favorites</button>
       </Link>
