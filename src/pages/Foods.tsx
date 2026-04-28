@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import FoodList from "../components/FoodList";
 import FilterMenu from "../components/FilterMenu";
 import SearchInput from "../components/SearchInput";
@@ -19,7 +19,14 @@ const sortActionMap: Record<string, string> = {
 function Foods() {
   const { state, dispatch } = useContext(AppContext);
   const location = useLocation();
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchTerm = searchParams.get("q") ?? "";
+  const setSearchTerm = (value: string) =>
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      if (value) next.set("q", value); else next.delete("q");
+      return next;
+    }, { replace: true });
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(
     (location.state as { showFavoritesOnly?: boolean } | null)
