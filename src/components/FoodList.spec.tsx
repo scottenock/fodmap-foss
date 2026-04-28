@@ -25,7 +25,7 @@ const items: Fodmap[] = [
 describe("FoodList", () => {
   test("component renders expected text", () => {
     render(
-      <AppProvider initialState={{ sortOrder: "a-z", favorites: [], log: {}, meals: {} }}>
+      <AppProvider initialState={{ sortOrder: "a-z", favorites: [], log: {}, meals: {}, symptoms: {} }}>
         <MemoryRouter>
           <FoodList foods={items} />
         </MemoryRouter>
@@ -42,7 +42,7 @@ describe("FoodList", () => {
 
   test("list items have the expected anchor tags", () => {
     render(
-      <AppProvider initialState={{ sortOrder: "a-z", favorites: [], log: {}, meals: {} }}>
+      <AppProvider initialState={{ sortOrder: "a-z", favorites: [], log: {}, meals: {}, symptoms: {} }}>
         <MemoryRouter>
           <FoodList foods={items} />
         </MemoryRouter>
@@ -56,7 +56,7 @@ describe("FoodList", () => {
 
   test("renders star buttons for each food item", () => {
     render(
-      <AppProvider initialState={{ sortOrder: "a-z", favorites: [], log: {}, meals: {} }}>
+      <AppProvider initialState={{ sortOrder: "a-z", favorites: [], log: {}, meals: {}, symptoms: {} }}>
         <MemoryRouter>
           <FoodList foods={items} />
         </MemoryRouter>
@@ -69,7 +69,7 @@ describe("FoodList", () => {
 
   test("renders a filled star for favorited items", () => {
     render(
-      <AppProvider initialState={{ sortOrder: "a-z", favorites: ["1"], log: {}, meals: {} }}>
+      <AppProvider initialState={{ sortOrder: "a-z", favorites: ["1"], log: {}, meals: {}, symptoms: {} }}>
         <MemoryRouter>
           <FoodList foods={items} />
         </MemoryRouter>

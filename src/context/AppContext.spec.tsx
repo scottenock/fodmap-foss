@@ -25,7 +25,7 @@ const MockPage = () => {
   );
 };
 
-const baseState = { sortOrder: "a-z", favorites: [], log: {}, meals: {} };
+const baseState = { sortOrder: "a-z", favorites: [], log: {}, meals: {}, symptoms: {} };
 
 describe("AppContext", () => {
   it("defaults to alphabetical sort order", () => {

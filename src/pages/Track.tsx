@@ -5,7 +5,8 @@ import DateNav from "../components/DateNav";
 import PillButton from "../components/PillButton";
 import FoodPicker from "../components/FoodPicker";
 import Score from "../components/Score";
-import AppContext, { ACTIONS, MealType } from "../context/AppContext";
+import SymptomSheet from "../components/SymptomSheet";
+import AppContext, { ACTIONS, MealType, SymptomEntry } from "../context/AppContext";
 import { Fodmap } from "../types/Fodmap";
 import fodmap from "../data/fodmap";
 
@@ -30,10 +31,9 @@ const mealLabel: Record<MealType, string> = {
 
 function Track() {
   const { state, dispatch } = useContext(AppContext);
-  const [selectedDate, setSelectedDate] = useState(() =>
-    toDateString(new Date()),
-  );
+  const [selectedDate, setSelectedDate] = useState(() => toDateString(new Date()));
   const [addingToMeal, setAddingToMeal] = useState<MealType | null>(null);
+  const [showSymptomSheet, setShowSymptomSheet] = useState(false);
 
   const today = toDateString(new Date());
   const dayMeals = state.meals[selectedDate] ?? {
@@ -51,6 +51,11 @@ function Track() {
     setAddingToMeal(null);
   };
 
+  const handleLogSymptom = (entry: SymptomEntry) => {
+    dispatch({ type: ACTIONS.LOG_SYMPTOM, payload: { date: selectedDate, entry } });
+    setShowSymptomSheet(false);
+  };
+
   if (addingToMeal) {
     const existingFoodIds = dayMeals[addingToMeal].map((e) => e.foodId);
     return (
@@ -64,7 +69,7 @@ function Track() {
   }
 
   return (
-    <div>
+    <div className="pb-16">
       <NavBar />
       <MonthCalendar
         selectedDate={selectedDate}
@@ -127,6 +132,24 @@ function Track() {
           </section>
         ))}
       </div>
+
+      <div className="fixed bottom-0 left-0 right-0 z-10 flex justify-center">
+        <div className="w-full max-w-screen-sm bg-white border-t border-gray-200 px-4 py-3">
+          <button
+            onClick={() => setShowSymptomSheet(true)}
+            className="w-full bg-green-400 text-white rounded-full py-3 font-semibold"
+          >
+            Log Symptom
+          </button>
+        </div>
+      </div>
+
+      {showSymptomSheet && (
+        <SymptomSheet
+          onLog={handleLogSymptom}
+          onClose={() => setShowSymptomSheet(false)}
+        />
+      )}
     </div>
   );
 }

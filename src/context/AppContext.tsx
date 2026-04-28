@@ -18,11 +18,25 @@ export type MealEntry = { foodId: string; quantity: number };
 type DayMeals = Record<MealType, MealEntry[]>;
 export type MealLog = Record<string, DayMeals>;
 
+export type MealContext = "morning" | "breakfast" | "lunch" | "dinner";
+export type SymptomEntry = {
+  id: string;
+  mealContext: MealContext;
+  timing: number;        // 0–4: immediate, 1hr, 2hr, 3hr, 4hr+
+  stoolConsistency: number; // 1–5: firm → loose
+  bloating: number;      // 1–5: none → severe
+  gas: number;
+  stomachPain: number;
+  urgency: number;
+};
+export type SymptomLog = Record<string, SymptomEntry[]>;
+
 type AppState = {
   sortOrder: string;
   favorites: string[];
   log: FoodLog;
   meals: MealLog;
+  symptoms: SymptomLog;
 };
 
 type ContextProps = {
@@ -39,6 +53,7 @@ export enum ACTIONS {
   UNLOG_FOOD = "UNLOG_FOOD",
   ADD_MEAL_FOOD = "ADD_MEAL_FOOD",
   REMOVE_MEAL_FOOD = "REMOVE_MEAL_FOOD",
+  LOG_SYMPTOM = "LOG_SYMPTOM",
 }
 
 const STORAGE_KEY = "fodmap-foss";
@@ -48,6 +63,7 @@ const defaultState: AppState = {
   favorites: [],
   log: {},
   meals: {},
+  symptoms: {},
 };
 
 const migrateMeals = (raw: unknown): MealLog => {
@@ -83,6 +99,10 @@ const loadState = (): AppState => {
           ? (parsed.log as FoodLog)
           : {},
       meals: migrateMeals(parsed.meals),
+      symptoms:
+        parsed.symptoms && typeof parsed.symptoms === "object" && !Array.isArray(parsed.symptoms)
+          ? (parsed.symptoms as SymptomLog)
+          : {},
     };
   } catch {
     return defaultState;
@@ -184,6 +204,16 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
           : { ...state.meals, [date]: newDayMeals };
         return { ...state, meals: newMeals };
       }
+      case ACTIONS.LOG_SYMPTOM: {
+        const { date, entry } = action.payload as { date: string; entry: SymptomEntry };
+        return {
+          ...state,
+          symptoms: {
+            ...state.symptoms,
+            [date]: [...(state.symptoms[date] ?? []), entry],
+          },
+        };
+      }
       default:
         return state;
     }
@@ -202,9 +232,10 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
         favorites: state.favorites,
         log: state.log,
         meals: state.meals,
+        symptoms: state.symptoms,
       })
     );
-  }, [state.favorites, state.log, state.meals]);
+  }, [state.favorites, state.log, state.meals, state.symptoms]);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
