@@ -1,10 +1,9 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import fodmap from "../data/fodmap";
 import NavBar from "../components/NavBar";
 import Score from "../components/Score";
 import StarButton from "../components/StarButton";
-import FoodLogBanner from "../components/FoodLogBanner";
 import AppContext, { ACTIONS } from "../context/AppContext";
 import FodmapCategoryBars from "../components/FodmapCategoryBars";
 import { useFodmapCategoryRanking } from "../hooks/useFodmapCategoryRanking";
@@ -20,19 +19,9 @@ const fodmapRating = (score?: number) => {
   return "N/A";
 };
 
-const toDateString = (d: Date) =>
-  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-
-const adjustDate = (dateStr: string, days: number): string => {
-  const d = new Date(dateStr + "T00:00:00");
-  d.setDate(d.getDate() + days);
-  return toDateString(d);
-};
-
 function FoodDetail() {
   const { id } = useParams();
   const { state, dispatch } = useContext(AppContext);
-  const [selectedDate, setSelectedDate] = useState(() => toDateString(new Date()));
   const food = fodmap.find((f) => f.id === id);
 
   if (!food) return null;
@@ -46,10 +35,8 @@ function FoodDetail() {
       )
     : [];
 
-  const today = toDateString(new Date());
   const ratingColour = food.fodmap === "high" ? "bg-red-500" : "bg-green-300";
   const isFavorited = state.favorites.includes(food.id);
-  const logCount = state.log[selectedDate]?.[food.id] ?? 0;
 
   return (
     <div>
@@ -122,19 +109,6 @@ function FoodDetail() {
           <FodmapCategoryBars categories={categoryRanking} />
         </section>
       )}
-      <FoodLogBanner
-        date={selectedDate}
-        onPrevDay={() => setSelectedDate((d) => adjustDate(d, -1))}
-        onNextDay={() => setSelectedDate((d) => adjustDate(d, 1))}
-        nextDayDisabled={selectedDate >= today}
-        count={logCount}
-        onLog={() =>
-          dispatch({ type: ACTIONS.LOG_FOOD, payload: { id: food.id, date: selectedDate } })
-        }
-        onUnlog={() =>
-          dispatch({ type: ACTIONS.UNLOG_FOOD, payload: { id: food.id, date: selectedDate } })
-        }
-      />
     </div>
   );
 }
