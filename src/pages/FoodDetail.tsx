@@ -6,6 +6,8 @@ import Score from "../components/Score";
 import StarButton from "../components/StarButton";
 import FoodLogBanner from "../components/FoodLogBanner";
 import AppContext, { ACTIONS } from "../context/AppContext";
+import FodmapCategoryBars from "../components/FodmapCategoryBars";
+import { useFodmapCategoryRanking } from "../hooks/useFodmapCategoryRanking";
 
 const styles = {
   container: "p-3 flex my-1 shadow-md mb-2 justify-between",
@@ -34,6 +36,15 @@ function FoodDetail() {
   const food = fodmap.find((f) => f.id === id);
 
   if (!food) return null;
+
+  const categoryRanking = useFodmapCategoryRanking();
+  const hasRankingData = categoryRanking.some((c) => c.score > 0);
+
+  const sensitiveCategories = food.details
+    ? categoryRanking.filter(
+        (c) => c.percentage >= 50 && (food.details![c.key] ?? 0) === 2
+      )
+    : [];
 
   const today = toDateString(new Date());
   const ratingColour = food.fodmap === "high" ? "bg-red-500" : "bg-green-300";
@@ -89,6 +100,28 @@ function FoodDetail() {
         />
         <div className="border-b-2 border-gray-300" />
       </section>
+      {sensitiveCategories.length > 0 && (
+        <div className="mx-3 mb-3 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 flex gap-3">
+          <span className="text-amber-500 text-lg leading-none shrink-0">⚠</span>
+          <div>
+            <p className="text-sm font-semibold text-amber-800">Likely sensitive to this food</p>
+            <p className="text-xs text-amber-700 mt-0.5">
+              This food is high in{" "}
+              {sensitiveCategories.map((c) => c.label).join(" and ")}, which{" "}
+              {sensitiveCategories.length === 1 ? "is" : "are"} among your most triggered categories.
+            </p>
+          </div>
+        </div>
+      )}
+      {hasRankingData && (
+        <section className="mx-3 mb-3 rounded-xl border border-gray-200 overflow-hidden">
+          <div className="px-4 py-3 border-b border-gray-100">
+            <h2 className="font-semibold text-base">Your FODMAP Sensitivity</h2>
+            <p className="text-xs text-gray-400 mt-0.5">Based on your logged symptoms</p>
+          </div>
+          <FodmapCategoryBars categories={categoryRanking} />
+        </section>
+      )}
       <FoodLogBanner
         date={selectedDate}
         onPrevDay={() => setSelectedDate((d) => adjustDate(d, -1))}

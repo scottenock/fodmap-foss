@@ -19,9 +19,9 @@ describe("FoodDetail", () => {
     expect(screen.getByText(food.name)).toBeInTheDocument();
     expect(screen.getByText(food.category)).toBeInTheDocument();
     expect(screen.getByText("Oligos")).toBeInTheDocument();
-    expect(screen.getByText("Fructose")).toBeInTheDocument();
-    expect(screen.getByText("Polyols")).toBeInTheDocument();
-    expect(screen.getByText("Lactose")).toBeInTheDocument();
+    expect(screen.getAllByText("Fructose").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Polyols").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Lactose").length).toBeGreaterThan(0);
   });
 
   test("renders nothing for an unknown food id", () => {
