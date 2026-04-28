@@ -1,15 +1,20 @@
 import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { useTriggerFoods } from "../hooks/useTriggerFoods";
+import { useFodmapCategoryRanking } from "../hooks/useFodmapCategoryRanking";
 
 function SymptomAnalysis() {
   const triggers = useTriggerFoods();
+  const categoryRanking = useFodmapCategoryRanking();
   const top5 = triggers.slice(0, 5);
+
+  const hasData = categoryRanking.some((c) => c.score > 0);
 
   return (
     <div>
       <NavBar />
-      <div className="p-3">
+      <div className="p-3 space-y-3">
+
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-100">
             <h2 className="font-semibold text-base">Potential Trigger Foods</h2>
@@ -54,6 +59,45 @@ function SymptomAnalysis() {
             </>
           )}
         </div>
+
+        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+          <div className="px-4 py-3 border-b border-gray-100">
+            <h2 className="font-semibold text-base">FODMAP Category Sensitivity</h2>
+            <p className="text-xs text-gray-400 mt-0.5">
+              Categories ranked by how often high-scoring foods appeared before symptoms
+            </p>
+          </div>
+
+          {!hasData ? (
+            <div className="px-4 py-8 text-center">
+              <p className="text-gray-400 text-sm">No data yet</p>
+              <p className="text-gray-300 text-xs mt-1">
+                Log meals and symptoms on the Track page to see correlations
+              </p>
+            </div>
+          ) : (
+            <ul>
+              {categoryRanking.map((c, i) => (
+                <li
+                  key={c.key}
+                  className={`px-4 py-3 ${i < categoryRanking.length - 1 ? "border-b border-gray-100" : ""}`}
+                >
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-sm font-medium text-gray-800">{c.label}</span>
+                    <span className="text-xs text-gray-400">{c.percentage}%</span>
+                  </div>
+                  <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-green-400 rounded-full"
+                      style={{ width: `${c.percentage}%` }}
+                    />
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
       </div>
     </div>
   );
