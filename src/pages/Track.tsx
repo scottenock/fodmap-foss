@@ -6,6 +6,7 @@ import PillButton from "../components/PillButton";
 import FoodPicker from "../components/FoodPicker";
 import Score from "../components/Score";
 import SymptomSheet from "../components/SymptomSheet";
+import SymptomCard from "../components/SymptomCard";
 import AppContext, { ACTIONS, MealType, SymptomEntry } from "../context/AppContext";
 import { Fodmap } from "../types/Fodmap";
 import fodmap from "../data/fodmap";
@@ -76,6 +77,7 @@ function Track() {
         onSelectDate={setSelectedDate}
         maxDate={today}
         meals={state.meals}
+        symptoms={state.symptoms}
       />
       <DateNav
         date={selectedDate}
@@ -84,53 +86,86 @@ function Track() {
         nextDayDisabled={selectedDate >= today}
       />
       <div className="p-3">
-        {meals.map((meal) => (
-          <section key={meal} className="mb-5">
-            <h2 className="font-semibold text-base mb-2">{mealLabel[meal]}</h2>
-            {dayMeals[meal].map(({ foodId, quantity }, i) => {
-              const food = fodmap.find((f) => f.id === foodId);
-              if (!food) return null;
-              return (
-                <div
-                  key={`${foodId}-${i}`}
-                  className="flex items-center justify-between py-2 border-b border-gray-200"
-                >
-                  <div>
-                    <p className="text-base">{food.name}</p>
-                    <p className="text-sm text-gray-400">
-                      {food.category} · {QUANTITY_LABELS[quantity - 1]}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Score
-                      text={food.fodmap}
-                      score={food.fodmap === "high" ? 2 : 0}
-                      reversed={true}
-                    />
-                    <button
-                      onClick={() =>
-                        dispatch({
-                          type: ACTIONS.REMOVE_MEAL_FOOD,
-                          payload: { date: selectedDate, meal, index: i },
-                        })
-                      }
-                      aria-label={`Remove ${food.name}`}
-                      className="p-2 text-gray-400 text-xl leading-none"
-                    >
-                      ×
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-            <PillButton
-              onClick={() => setAddingToMeal(meal)}
-              className="mt-3 py-2 px-4 w-full"
-            >
-              + Add food
-            </PillButton>
-          </section>
-        ))}
+        {(() => {
+          const daySymptoms = state.symptoms[selectedDate] ?? [];
+          const symptomCards = (context: MealType | "morning") =>
+            daySymptoms
+              .filter((e) => e.mealContext === context)
+              .map((entry) => (
+                <SymptomCard
+                  key={entry.id}
+                  entry={entry}
+                  onRemove={() =>
+                    dispatch({
+                      type: ACTIONS.REMOVE_SYMPTOM,
+                      payload: { date: selectedDate, id: entry.id },
+                    })
+                  }
+                />
+              ));
+
+          const morningCards = symptomCards("morning");
+
+          return (
+            <>
+              {morningCards.length > 0 && (
+                <section className="mb-5">
+                  <h2 className="font-semibold text-base mb-2">Morning</h2>
+                  {morningCards}
+                </section>
+              )}
+
+              {meals.map((meal) => (
+                <section key={meal} className="mb-5">
+                  <h2 className="font-semibold text-base mb-2">{mealLabel[meal]}</h2>
+                  {dayMeals[meal].map(({ foodId, quantity }, i) => {
+                    const food = fodmap.find((f) => f.id === foodId);
+                    if (!food) return null;
+                    return (
+                      <div
+                        key={`${foodId}-${i}`}
+                        className="flex items-center justify-between py-2 border-b border-gray-200"
+                      >
+                        <div>
+                          <p className="text-base">{food.name}</p>
+                          <p className="text-sm text-gray-400">
+                            {food.category} · {QUANTITY_LABELS[quantity - 1]}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Score
+                            text={food.fodmap}
+                            score={food.fodmap === "high" ? 2 : 0}
+                            reversed={true}
+                          />
+                          <button
+                            onClick={() =>
+                              dispatch({
+                                type: ACTIONS.REMOVE_MEAL_FOOD,
+                                payload: { date: selectedDate, meal, index: i },
+                              })
+                            }
+                            aria-label={`Remove ${food.name}`}
+                            className="p-2 text-gray-400 text-xl leading-none"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {symptomCards(meal)}
+                  <PillButton
+                    onClick={() => setAddingToMeal(meal)}
+                    className="mt-3 py-2 px-4 w-full"
+                  >
+                    + Add food
+                  </PillButton>
+                </section>
+              ))}
+            </>
+          );
+        })()}
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 z-10 flex justify-center">
@@ -146,6 +181,7 @@ function Track() {
 
       {showSymptomSheet && (
         <SymptomSheet
+          existingSymptoms={state.symptoms[selectedDate] ?? []}
           onLog={handleLogSymptom}
           onClose={() => setShowSymptomSheet(false)}
         />

@@ -54,6 +54,7 @@ export enum ACTIONS {
   ADD_MEAL_FOOD = "ADD_MEAL_FOOD",
   REMOVE_MEAL_FOOD = "REMOVE_MEAL_FOOD",
   LOG_SYMPTOM = "LOG_SYMPTOM",
+  REMOVE_SYMPTOM = "REMOVE_SYMPTOM",
 }
 
 const STORAGE_KEY = "fodmap-foss";
@@ -206,13 +207,22 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
       }
       case ACTIONS.LOG_SYMPTOM: {
         const { date, entry } = action.payload as { date: string; entry: SymptomEntry };
+        const existing = state.symptoms[date] ?? [];
+        const filtered = existing.filter(
+          (e) => !(e.mealContext === entry.mealContext && e.timing === entry.timing)
+        );
         return {
           ...state,
-          symptoms: {
-            ...state.symptoms,
-            [date]: [...(state.symptoms[date] ?? []), entry],
-          },
+          symptoms: { ...state.symptoms, [date]: [...filtered, entry] },
         };
+      }
+      case ACTIONS.REMOVE_SYMPTOM: {
+        const { date, id } = action.payload as { date: string; id: string };
+        const remaining = (state.symptoms[date] ?? []).filter((e) => e.id !== id);
+        const newSymptoms = remaining.length === 0
+          ? Object.fromEntries(Object.entries(state.symptoms).filter(([k]) => k !== date))
+          : { ...state.symptoms, [date]: remaining };
+        return { ...state, symptoms: newSymptoms };
       }
       default:
         return state;

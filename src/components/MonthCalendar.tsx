@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { MealLog } from "../context/AppContext";
+import { MealLog, SymptomEntry, SymptomLog } from "../context/AppContext";
 
 type MonthCalendarProps = {
   selectedDate: string;
   onSelectDate: (date: string) => void;
   maxDate: string;
   meals?: MealLog;
+  symptoms?: SymptomLog;
 };
 
 const DAY_LABELS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
@@ -16,9 +17,36 @@ const MEAL_DOTS: { meal: "breakfast" | "lunch" | "dinner"; color: string }[] = [
   { meal: "dinner",    color: "bg-indigo-400" },
 ];
 
+const SEVERITY_RING: Record<"low" | "medium" | "high", string> = {
+  low:    "ring-2 ring-green-400",
+  medium: "ring-2 ring-orange-400",
+  high:   "ring-2 ring-red-500",
+};
+
+const daySeverity = (entries: SymptomEntry[]): "low" | "medium" | "high" | null => {
+  if (!entries || entries.length === 0) return null;
+  let worst = 0;
+  for (const entry of entries) {
+    const severityMax = Math.max(entry.bloating, entry.gas, entry.stomachPain, entry.urgency);
+    // Map stool deviation from normal (3) onto a 1–5 scale
+    const stoolDev = Math.abs(entry.stoolConsistency - 3);
+    const stoolScore = stoolDev === 0 ? 1 : stoolDev === 1 ? 3 : 5;
+    worst = Math.max(worst, severityMax, stoolScore);
+  }
+  if (worst >= 4) return "high";
+  if (worst >= 3) return "medium";
+  return "low";
+};
+
 const parseDate = (dateStr: string) => dateStr.split("-").map(Number) as [number, number, number];
 
-const MonthCalendar: React.FC<MonthCalendarProps> = ({ selectedDate, onSelectDate, maxDate, meals = {} }) => {
+const MonthCalendar: React.FC<MonthCalendarProps> = ({
+  selectedDate,
+  onSelectDate,
+  maxDate,
+  meals = {},
+  symptoms = {},
+}) => {
   const [selYear, selMonth] = parseDate(selectedDate);
   const [viewYear, setViewYear] = useState(selYear);
   const [viewMonth, setViewMonth] = useState(selMonth);
@@ -112,16 +140,22 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({ selectedDate, onSelectDat
               key={day}
               onClick={() => handleDayClick(day)}
               disabled={isDisabled(day)}
-              className="mx-auto flex flex-col items-center gap-0.5"
+              className="mx-auto flex flex-col items-center gap-1"
             >
-              <span
-                className={`flex items-center justify-center w-8 h-8 rounded-full text-sm transition-colors
-                  ${isSelected(day) ? "bg-green-400 text-white font-semibold" : ""}
-                  ${isDisabled(day) ? "text-gray-300 cursor-default" : !isSelected(day) ? "text-gray-700 active:bg-gray-100" : ""}
-                `}
-              >
-                {day}
-              </span>
+              {(() => {
+                const severity = daySeverity(symptoms[dayKey(day)] ?? []);
+                const ring = severity ? SEVERITY_RING[severity] : "";
+                return (
+                  <span
+                    className={`flex items-center justify-center w-8 h-8 rounded-full text-sm transition-colors ${ring}
+                      ${isSelected(day) ? "bg-green-400 text-white font-semibold" : ""}
+                      ${isDisabled(day) ? "text-gray-300 cursor-default" : !isSelected(day) ? "text-gray-700 active:bg-gray-100" : ""}
+                    `}
+                  >
+                    {day}
+                  </span>
+                );
+              })()}
               <span className="flex gap-0.5 h-1.5">
                 {MEAL_DOTS.map(({ meal, color }) =>
                   meals[dayKey(day)]?.[meal]?.length > 0 ? (

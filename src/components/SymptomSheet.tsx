@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MealContext, SymptomEntry } from "../context/AppContext";
 import PillButton from "./PillButton";
 
 type SymptomSheetProps = {
+  existingSymptoms?: SymptomEntry[];
   onLog: (entry: SymptomEntry) => void;
   onClose: () => void;
 };
@@ -26,25 +27,43 @@ const SLIDERS: { key: keyof Omit<SymptomEntry, "id" | "mealContext" | "timing">;
 
 type SliderValues = Record<typeof SLIDERS[number]["key"], number>;
 
-const SymptomSheet: React.FC<SymptomSheetProps> = ({ onLog, onClose }) => {
+const DEFAULT_SLIDERS: SliderValues = {
+  stoolConsistency: 3,
+  bloating: 1,
+  gas: 1,
+  stomachPain: 1,
+  urgency: 1,
+};
+
+const SymptomSheet: React.FC<SymptomSheetProps> = ({ existingSymptoms = [], onLog, onClose }) => {
   const [mealContext, setMealContext] = useState<MealContext>("morning");
   const [timing, setTiming] = useState(0);
-  const [sliders, setSliders] = useState<SliderValues>({
-    stoolConsistency: 3,
-    bloating: 1,
-    gas: 1,
-    stomachPain: 1,
-    urgency: 1,
-  });
+  const [sliders, setSliders] = useState<SliderValues>(DEFAULT_SLIDERS);
+
+  useEffect(() => {
+    const match = existingSymptoms.find(
+      (e) => e.mealContext === mealContext && e.timing === timing
+    );
+    if (match) {
+      setSliders({
+        stoolConsistency: match.stoolConsistency,
+        bloating: match.bloating,
+        gas: match.gas,
+        stomachPain: match.stomachPain,
+        urgency: match.urgency,
+      });
+    } else {
+      setSliders(DEFAULT_SLIDERS);
+    }
+  }, [mealContext, timing, existingSymptoms]);
 
   const handleConfirm = () => {
-    onLog({
-      id: String(Date.now()),
-      mealContext,
-      timing,
-      ...sliders,
-    });
+    onLog({ id: String(Date.now()), mealContext, timing, ...sliders });
   };
+
+  const isUpdating = existingSymptoms.some(
+    (e) => e.mealContext === mealContext && e.timing === timing
+  );
 
   return (
     <div className="fixed inset-0 z-30 flex flex-col justify-end items-center">
@@ -125,7 +144,7 @@ const SymptomSheet: React.FC<SymptomSheetProps> = ({ onLog, onClose }) => {
             onClick={handleConfirm}
             className="w-full bg-green-400 text-white rounded-full py-3 font-semibold"
           >
-            Log Symptoms
+            {isUpdating ? "Update Symptoms" : "Log Symptoms"}
           </button>
         </div>
       </div>
