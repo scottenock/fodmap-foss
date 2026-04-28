@@ -12,7 +12,7 @@ export type FodmapCategoryScore = {
 
 const CATEGORIES: { key: FodmapCategoryScore["key"]; label: string }[] = [
   { key: "fructose", label: "Fructose"        },
-  { key: "oligos",   label: "Fructans & GOS"  },
+  { key: "oligos",   label: "Oligos"           },
   { key: "lactose",  label: "Lactose"          },
   { key: "polyols",  label: "Polyols"          },
 ];
