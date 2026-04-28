@@ -20,6 +20,9 @@ function Home() {
       <Link to="/food" state={{ showFavoritesOnly: true }}>
         <button className={styles.button}>Favorites</button>
       </Link>
+      <Link to="/analysis">
+        <button className={styles.button}>Symptom Analysis</button>
+      </Link>
       <Link to="/about">
         <button className={styles.button}>About</button>
       </Link>

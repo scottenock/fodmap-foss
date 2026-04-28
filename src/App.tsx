@@ -6,6 +6,8 @@ import FoodDetail from "./pages/FoodDetail";
 import Foods from "./pages/Foods";
 import Home from "./pages/Home";
 import Track from "./pages/Track";
+import SymptomAnalysis from "./pages/SymptomAnalysis";
+import TriggerFoods from "./pages/TriggerFoods";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route path="/food" Component={Foods} />
             <Route path="/food/:id" Component={FoodDetail} />
             <Route path="/track" Component={Track} />
+            <Route path="/analysis" Component={SymptomAnalysis} />
+            <Route path="/analysis/triggers" Component={TriggerFoods} />
           </Routes>
         </HashRouter>
       </AppProvider>
