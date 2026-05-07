@@ -1,6 +1,6 @@
 const CreatedBy: React.FC = () => (
   <p className="text-center mt-10 mb-5 text-foreground-muted text-sm">
-    Created with ❤️ by Scott Enock & Laputa Labs LTD
+    Created with ❤️ by Laputa Labs LTD
   </p>
 );
 
