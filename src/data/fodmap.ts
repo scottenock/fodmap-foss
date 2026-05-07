@@ -502,13 +502,6 @@ export default [
     details: { oligos: 2, fructose: 0, polyols: 0, lactose: 0 },
   },
   {
-    id: "75",
-    name: "Cho Cho",
-    fodmap: "high",
-    category: "Vegetables and legumes",
-    details: { oligos: 2, fructose: 0, polyols: 0, lactose: 0 },
-  },
-  {
     id: "76",
     name: "Cassava",
     fodmap: "high",
@@ -855,7 +848,7 @@ export default [
     name: "Bananas, ripe",
     fodmap: "high",
     category: "Fruit",
-    details: { oligos: 2, fructose: 0, polyols: 0, lactose: 0 },
+    details: { oligos: 0, fructose: 2, polyols: 0, lactose: 0 },
   },
   {
     id: "128",
@@ -1512,7 +1505,7 @@ export default [
     name: "Maltitol",
     fodmap: "high",
     category: "Sweeteners",
-    details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
+    details: { oligos: 0, fructose: 0, polyols: 2, lactose: 0 },
   },
   {
     id: "223",
@@ -1533,7 +1526,7 @@ export default [
     name: "Mannitol",
     fodmap: "high",
     category: "Sweeteners",
-    details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
+    details: { oligos: 0, fructose: 0, polyols: 2, lactose: 0 },
   },
   {
     id: "226",
@@ -1723,13 +1716,6 @@ export default [
     details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
   },
   {
-    id: "252",
-    name: "Pineapple",
-    fodmap: "low",
-    category: "Fruit",
-    details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
-  },
-  {
     id: "253",
     name: "Pistachio",
     fodmap: "high",
@@ -1784,13 +1770,6 @@ export default [
     name: "Pumpkin",
     fodmap: "low",
     category: "Vegetables and legumes",
-    details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
-  },
-  {
-    id: "261",
-    name: "Pumpkin seeds",
-    fodmap: "low",
-    category: "Nuts and Seeds",
     details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
   },
   {
@@ -1939,7 +1918,7 @@ export default [
     name: "Sheep's milk",
     fodmap: "high",
     category: "Milk",
-    details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
+    details: { oligos: 0, fructose: 0, polyols: 0, lactose: 2 },
   },
   {
     id: "283",
@@ -2065,7 +2044,7 @@ export default [
     name: "Sultanas",
     fodmap: "high",
     category: "Fruit",
-    details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
+    details: { oligos: 0, fructose: 2, polyols: 0, lactose: 0 },
   },
   {
     id: "301",
@@ -2455,9 +2434,9 @@ export default [
   {
     id: "355",
     name: "Endive",
-    fodmap: "low",
+    fodmap: "high",
     category: "Vegetables and legumes",
-    details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
+    details: { oligos: 2, fructose: 0, polyols: 0, lactose: 0 },
   },
   {
     id: "356",
@@ -2676,7 +2655,7 @@ export default [
   },
   {
     id: "386",
-    name: "Tumeric",
+    name: "Turmeric",
     fodmap: "low",
     category: "Vegetables and legumes",
     details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
@@ -2734,9 +2713,9 @@ export default [
   {
     id: "394",
     name: "Chicory leaves",
-    fodmap: "low",
+    fodmap: "high",
     category: "Vegetables and legumes",
-    details: { oligos: 0, fructose: 0, polyols: 0, lactose: 0 },
+    details: { oligos: 2, fructose: 0, polyols: 0, lactose: 0 },
   },
   {
     id: "395",
@@ -2849,13 +2828,6 @@ export default [
   {
     id: "410",
     name: "Onion Powder",
-    fodmap: "high",
-    category: "Cooking ingredients, Herbs and Spices",
-    details: { oligos: 2, fructose: 0, polyols: 0, lactose: 0 },
-  },
-  {
-    id: "411",
-    name: "Garlic Powder",
     fodmap: "high",
     category: "Cooking ingredients, Herbs and Spices",
     details: { oligos: 2, fructose: 0, polyols: 0, lactose: 0 },
