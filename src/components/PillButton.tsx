@@ -13,10 +13,10 @@ const PillButton: React.FC<PillButtonProps> = ({
 }) => (
   <button
     onClick={onClick}
-    className={`rounded text-sm border transition-colors ${
+    className={`rounded-full text-sm border transition-colors ${
       active
         ? "bg-green-400 text-white border-green-400"
-        : "bg-white text-gray-700 border-gray-300"
+        : "bg-white text-gray-600 border-gray-300"
     } ${className}`}
   >
     {children}

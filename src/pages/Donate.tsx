@@ -9,7 +9,7 @@ const styles = {
 function Donate() {
   return (
     <>
-      <NavBar />
+      <NavBar title="Donate" />
       <div className="p-3">
         <section className={styles.section}>
           <h2 className="font-bold text-lg mb-4">Support the Project</h2>

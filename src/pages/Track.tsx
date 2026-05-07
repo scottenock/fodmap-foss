@@ -30,6 +30,12 @@ const mealLabel: Record<MealType, string> = {
   dinner: "Dinner",
 };
 
+const mealDot: Record<MealType, string> = {
+  breakfast: "bg-yellow-400",
+  lunch: "bg-orange-400",
+  dinner: "bg-indigo-400",
+};
+
 function Track() {
   const { state, dispatch } = useContext(AppContext);
   const [selectedDate, setSelectedDate] = useState(() => toDateString(new Date()));
@@ -70,8 +76,8 @@ function Track() {
   }
 
   return (
-    <div className="pb-16">
-      <NavBar />
+    <div className="pb-20">
+      <NavBar title="Journal" />
       <MonthCalendar
         selectedDate={selectedDate}
         onSelectDate={setSelectedDate}
@@ -110,54 +116,62 @@ function Track() {
             <>
               {morningCards.length > 0 && (
                 <section className="mb-5">
-                  <h2 className="font-semibold text-base mb-2">Morning</h2>
+                  <h2 className="font-semibold text-base mb-2 text-gray-700">Morning</h2>
                   {morningCards}
                 </section>
               )}
 
               {meals.map((meal) => (
                 <section key={meal} className="mb-5">
-                  <h2 className="font-semibold text-base mb-2">{mealLabel[meal]}</h2>
-                  {dayMeals[meal].map(({ foodId, quantity }, i) => {
-                    const food = fodmap.find((f) => f.id === foodId);
-                    if (!food) return null;
-                    return (
-                      <div
-                        key={`${foodId}-${i}`}
-                        className="flex items-center justify-between py-2 border-b border-gray-200"
-                      >
-                        <div>
-                          <p className="text-base">{food.name}</p>
-                          <p className="text-sm text-gray-400">
-                            {food.category} · {QUANTITY_LABELS[quantity - 1]}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <Score
-                            text={food.fodmap}
-                            score={food.fodmap === "high" ? 2 : 0}
-                            reversed={true}
-                          />
-                          <button
-                            onClick={() =>
-                              dispatch({
-                                type: ACTIONS.REMOVE_MEAL_FOOD,
-                                payload: { date: selectedDate, meal, index: i },
-                              })
-                            }
-                            aria-label={`Remove ${food.name}`}
-                            className="p-2 text-gray-400 text-xl leading-none"
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${mealDot[meal]}`} />
+                    <h2 className="font-semibold text-base text-gray-700">{mealLabel[meal]}</h2>
+                  </div>
+                  <div className="bg-white rounded-xl border border-gray-100 overflow-hidden mb-2">
+                    {dayMeals[meal].length === 0 ? (
+                      <p className="px-4 py-3 text-sm text-gray-300">No foods logged</p>
+                    ) : (
+                      dayMeals[meal].map(({ foodId, quantity }, i) => {
+                        const food = fodmap.find((f) => f.id === foodId);
+                        if (!food) return null;
+                        return (
+                          <div
+                            key={`${foodId}-${i}`}
+                            className={`flex items-center justify-between px-4 py-3 ${i < dayMeals[meal].length - 1 ? "border-b border-gray-100" : ""}`}
                           >
-                            ×
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
+                            <div>
+                              <p className="text-base font-medium text-gray-900">{food.name}</p>
+                              <p className="text-sm text-gray-400">
+                                {food.category} · {QUANTITY_LABELS[quantity - 1]}
+                              </p>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <Score
+                                text={food.fodmap}
+                                score={food.fodmap === "high" ? 2 : 0}
+                              />
+                              <button
+                                onClick={() =>
+                                  dispatch({
+                                    type: ACTIONS.REMOVE_MEAL_FOOD,
+                                    payload: { date: selectedDate, meal, index: i },
+                                  })
+                                }
+                                aria-label={`Remove ${food.name}`}
+                                className="p-1 text-gray-300 text-xl leading-none"
+                              >
+                                ×
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
                   {symptomCards(meal)}
                   <PillButton
                     onClick={() => setAddingToMeal(meal)}
-                    className="mt-3 py-2 px-4 w-full"
+                    className="py-2 px-4 w-full"
                   >
                     + Add food
                   </PillButton>

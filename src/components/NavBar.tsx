@@ -7,59 +7,63 @@ type NavBarProps = {
   className?: string;
   goesHome?: boolean;
   children?: React.ReactNode;
-};
-
-const styles = {
-  container: "px-4 py-6 bg-green-400 flex justify-between items-center",
-  icons: "w-5 h-5 cursor-pointer mx-3",
-  links: "block px-5 py-3 ",
+  title?: string;
 };
 
 const NavBar: React.FC<NavBarProps> = ({
   className = "",
   goesHome = true,
   children,
+  title,
 }) => {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-
-  const handleClick = () => {
-    setShowMenu(true);
-  };
 
   useEffect(() => {
     ref.current && ref.current.focus();
   }, [showMenu]);
 
   return (
-    <nav className={`${styles.container} ${className}`}>
-      <img
-        src={leftArrow}
-        className={styles.icons}
+    <nav className={`px-4 py-3 bg-green-400 shadow-bottom flex justify-between items-center gap-2 ${className}`}>
+      <button
+        aria-label="Go back"
+        className="p-1 shrink-0 active:opacity-70 transition-opacity"
         onClick={() => (goesHome ? navigate("/") : navigate(-1))}
-      />
-      {children}
-      <div className="relative">
-        <img src={options} className={styles.icons} onClick={handleClick} />
+      >
+        <img src={leftArrow} className="w-5 h-5" />
+      </button>
+
+      <div className="flex-1 flex items-center justify-center min-w-0">
+        {children ?? (title && (
+          <p className="text-white font-semibold text-base truncate">{title}</p>
+        ))}
+      </div>
+
+      <div className="relative shrink-0">
+        <button
+          aria-label="More options"
+          className="p-1 active:opacity-70 transition-opacity"
+          onClick={() => setShowMenu(true)}
+        >
+          <img src={options} className="w-5 h-5" />
+        </button>
         <div
           tabIndex={0}
           ref={ref}
           onBlur={() => setShowMenu(false)}
-          className={`bg-white absolute right-2 top-0 border-2 ${
-            showMenu ? "" : "hidden"
-          }`}
+          className={`bg-white absolute right-0 top-8 rounded-xl shadow-lg border border-gray-100 overflow-hidden min-w-[130px] z-50 ${showMenu ? "" : "hidden"}`}
         >
           <Link
             onMouseDown={(e) => e.preventDefault()}
-            className={styles.links}
-            to="/About"
+            className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b border-gray-100"
+            to="/about"
           >
             About
           </Link>
           <Link
             onMouseDown={(e) => e.preventDefault()}
-            className={styles.links}
+            className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
             to="/donate"
           >
             Donate

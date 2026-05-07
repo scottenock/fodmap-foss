@@ -9,7 +9,7 @@ const styles = {
 function About() {
   return (
     <>
-      <NavBar />
+      <NavBar title="About" />
       <div className="p-3">
         <section className={styles.section}>
           <h1 className="font-bold text-lg mb-4">About FODMAPs</h1>

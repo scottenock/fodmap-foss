@@ -13,7 +13,7 @@ function SymptomAnalysis() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar title="Analysis" />
       <div className="p-3 space-y-3">
 
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">

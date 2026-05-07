@@ -1,4 +1,4 @@
-type ButtonProps = {
+type ScoreProps = {
   className?: string;
   children?: React.ReactNode;
   text: string;
@@ -6,16 +6,19 @@ type ButtonProps = {
   reversed?: boolean;
 };
 
-const colours = ["bg-green-400", "bg-orange-400", "bg-red-500", "bg-grey-300"];
+const badgeStyles = [
+  "bg-green-100 text-green-700",
+  "bg-orange-100 text-orange-700",
+  "bg-red-100 text-red-700",
+  "bg-gray-100 text-gray-500",
+];
 
-const Score: React.FC<ButtonProps> = ({ text, score, reversed = false }) => {
-  return (
-    <div className="flex items-center my-1">
-      {reversed && <p className="text-base font-light mr-2">{text}</p>}
-      <span className={`rounded-full w-3 h-3 block ${colours[score]} `} />
-      {!reversed && <p className="text-base font-light ml-2">{text}</p>}
-    </div>
-  );
-};
+const Score: React.FC<ScoreProps> = ({ text, score }) => (
+  <span
+    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${badgeStyles[score] ?? badgeStyles[3]}`}
+  >
+    {text}
+  </span>
+);
 
 export default Score;
