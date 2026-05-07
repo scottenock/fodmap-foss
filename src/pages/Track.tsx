@@ -116,7 +116,7 @@ function Track() {
             <>
               {morningCards.length > 0 && (
                 <section className="mb-5">
-                  <h2 className="font-semibold text-base mb-2 text-gray-700">Morning</h2>
+                  <h2 className="font-semibold text-base text-gray-700 dark:text-gray-200 mb-2">Morning</h2>
                   {morningCards}
                 </section>
               )}
@@ -125,11 +125,11 @@ function Track() {
                 <section key={meal} className="mb-5">
                   <div className="flex items-center gap-2 mb-2">
                     <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${mealDot[meal]}`} />
-                    <h2 className="font-semibold text-base text-gray-700">{mealLabel[meal]}</h2>
+                    <h2 className="font-semibold text-base text-gray-700 dark:text-gray-200">{mealLabel[meal]}</h2>
                   </div>
-                  <div className="bg-white rounded-xl border border-gray-100 overflow-hidden mb-2">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden mb-2">
                     {dayMeals[meal].length === 0 ? (
-                      <p className="px-4 py-3 text-sm text-gray-300">No foods logged</p>
+                      <p className="px-4 py-3 text-sm text-gray-300 dark:text-gray-600">No foods logged</p>
                     ) : (
                       dayMeals[meal].map(({ foodId, quantity }, i) => {
                         const food = fodmap.find((f) => f.id === foodId);
@@ -137,19 +137,16 @@ function Track() {
                         return (
                           <div
                             key={`${foodId}-${i}`}
-                            className={`flex items-center justify-between px-4 py-3 ${i < dayMeals[meal].length - 1 ? "border-b border-gray-100" : ""}`}
+                            className={`flex items-center justify-between px-4 py-3 ${i < dayMeals[meal].length - 1 ? "border-b border-gray-100 dark:border-gray-700" : ""}`}
                           >
                             <div>
-                              <p className="text-base font-medium text-gray-900">{food.name}</p>
-                              <p className="text-sm text-gray-400">
+                              <p className="text-base font-medium text-gray-900 dark:text-white">{food.name}</p>
+                              <p className="text-sm text-gray-400 dark:text-gray-500">
                                 {food.category} · {QUANTITY_LABELS[quantity - 1]}
                               </p>
                             </div>
                             <div className="flex items-center gap-3">
-                              <Score
-                                text={food.fodmap}
-                                score={food.fodmap === "high" ? 2 : 0}
-                              />
+                              <Score text={food.fodmap} score={food.fodmap === "high" ? 2 : 0} />
                               <button
                                 onClick={() =>
                                   dispatch({
@@ -158,7 +155,7 @@ function Track() {
                                   })
                                 }
                                 aria-label={`Remove ${food.name}`}
-                                className="p-1 text-gray-300 text-xl leading-none"
+                                className="p-1 text-gray-300 dark:text-gray-600 text-xl leading-none"
                               >
                                 ×
                               </button>
@@ -169,10 +166,7 @@ function Track() {
                     )}
                   </div>
                   {symptomCards(meal)}
-                  <PillButton
-                    onClick={() => setAddingToMeal(meal)}
-                    className="py-2 px-4 w-full"
-                  >
+                  <PillButton onClick={() => setAddingToMeal(meal)} className="py-2 px-4 w-full">
                     + Add food
                   </PillButton>
                 </section>
@@ -183,7 +177,7 @@ function Track() {
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 z-10 flex justify-center">
-        <div className="w-full max-w-screen-sm bg-white border-t border-gray-200 px-4 py-3">
+        <div className="w-full max-w-screen-sm bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 py-3">
           <button
             onClick={() => setShowSymptomSheet(true)}
             className="w-full bg-green-400 text-white rounded-full py-3 font-semibold"

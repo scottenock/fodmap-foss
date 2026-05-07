@@ -2,7 +2,7 @@ import { Dispatch, createContext, useEffect, useReducer } from "react";
 
 type AppProvider = {
   children: React.ReactNode;
-  initialState?: AppState;
+  initialState?: Partial<AppState>;
 };
 
 type ActionProps = {
@@ -22,14 +22,16 @@ export type MealContext = "morning" | "breakfast" | "lunch" | "dinner";
 export type SymptomEntry = {
   id: string;
   mealContext: MealContext;
-  timing: number;        // 0–4: immediate, 1hr, 2hr, 3hr, 4hr+
-  stoolConsistency: number; // 1–5: firm → loose
-  bloating: number;      // 1–5: none → severe
+  timing: number;
+  stoolConsistency: number;
+  bloating: number;
   gas: number;
   stomachPain: number;
   urgency: number;
 };
 export type SymptomLog = Record<string, SymptomEntry[]>;
+
+export type ThemePreference = "system" | "light" | "dark";
 
 type AppState = {
   sortOrder: string;
@@ -37,6 +39,7 @@ type AppState = {
   log: FoodLog;
   meals: MealLog;
   symptoms: SymptomLog;
+  themePreference: ThemePreference;
 };
 
 type ContextProps = {
@@ -55,6 +58,7 @@ export enum ACTIONS {
   REMOVE_MEAL_FOOD = "REMOVE_MEAL_FOOD",
   LOG_SYMPTOM = "LOG_SYMPTOM",
   REMOVE_SYMPTOM = "REMOVE_SYMPTOM",
+  SET_THEME = "SET_THEME",
 }
 
 const STORAGE_KEY = "fodmap-foss";
@@ -65,6 +69,7 @@ const defaultState: AppState = {
   log: {},
   meals: {},
   symptoms: {},
+  themePreference: "system",
 };
 
 const migrateMeals = (raw: unknown): MealLog => {
@@ -90,11 +95,10 @@ const loadState = (): AppState => {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     const parsed = stored ? (JSON.parse(stored) as Record<string, unknown>) : {};
+    const validThemes: ThemePreference[] = ["system", "light", "dark"];
     return {
       ...defaultState,
-      favorites: Array.isArray(parsed.favorites)
-        ? (parsed.favorites as string[])
-        : [],
+      favorites: Array.isArray(parsed.favorites) ? (parsed.favorites as string[]) : [],
       log:
         parsed.log && typeof parsed.log === "object" && !Array.isArray(parsed.log)
           ? (parsed.log as FoodLog)
@@ -104,6 +108,9 @@ const loadState = (): AppState => {
         parsed.symptoms && typeof parsed.symptoms === "object" && !Array.isArray(parsed.symptoms)
           ? (parsed.symptoms as SymptomLog)
           : {},
+      themePreference: validThemes.includes(parsed.themePreference as ThemePreference)
+        ? (parsed.themePreference as ThemePreference)
+        : "system",
     };
   } catch {
     return defaultState;
@@ -137,10 +144,7 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
         const dayLog = state.log[date] ?? {};
         return {
           ...state,
-          log: {
-            ...state.log,
-            [date]: { ...dayLog, [id]: (dayLog[id] ?? 0) + 1 },
-          },
+          log: { ...state.log, [date]: { ...dayLog, [id]: (dayLog[id] ?? 0) + 1 } },
         };
       }
       case ACTIONS.UNLOG_FOOD: {
@@ -148,31 +152,21 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
         const dayLog = state.log[date] ?? {};
         const currentCount = dayLog[id] ?? 0;
         if (currentCount <= 1) {
-          const remainingDay = Object.fromEntries(
-            Object.entries(dayLog).filter(([k]) => k !== id)
-          );
+          const remainingDay = Object.fromEntries(Object.entries(dayLog).filter(([k]) => k !== id));
           const newLog =
             Object.keys(remainingDay).length === 0
-              ? Object.fromEntries(
-                  Object.entries(state.log).filter(([k]) => k !== date)
-                )
+              ? Object.fromEntries(Object.entries(state.log).filter(([k]) => k !== date))
               : { ...state.log, [date]: remainingDay };
           return { ...state, log: newLog };
         }
         return {
           ...state,
-          log: {
-            ...state.log,
-            [date]: { ...dayLog, [id]: currentCount - 1 },
-          },
+          log: { ...state.log, [date]: { ...dayLog, [id]: currentCount - 1 } },
         };
       }
       case ACTIONS.ADD_MEAL_FOOD: {
         const { date, meal, foodId, quantity } = action.payload as {
-          date: string;
-          meal: MealType;
-          foodId: string;
-          quantity: number;
+          date: string; meal: MealType; foodId: string; quantity: number;
         };
         const dayMeals = state.meals[date] ?? emptyDayMeals();
         return {
@@ -185,9 +179,7 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
       }
       case ACTIONS.REMOVE_MEAL_FOOD: {
         const { date, meal, index } = action.payload as {
-          date: string;
-          meal: MealType;
-          index: number;
+          date: string; meal: MealType; index: number;
         };
         const dayMeals = state.meals[date] ?? emptyDayMeals();
         const updatedMeal = [
@@ -195,13 +187,9 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
           ...dayMeals[meal].slice(index + 1),
         ];
         const newDayMeals = { ...dayMeals, [meal]: updatedMeal };
-        const isEmpty = Object.values(newDayMeals).every(
-          (arr) => arr.length === 0
-        );
+        const isEmpty = Object.values(newDayMeals).every((arr) => arr.length === 0);
         const newMeals = isEmpty
-          ? Object.fromEntries(
-              Object.entries(state.meals).filter(([k]) => k !== date)
-            )
+          ? Object.fromEntries(Object.entries(state.meals).filter(([k]) => k !== date))
           : { ...state.meals, [date]: newDayMeals };
         return { ...state, meals: newMeals };
       }
@@ -219,11 +207,14 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
       case ACTIONS.REMOVE_SYMPTOM: {
         const { date, id } = action.payload as { date: string; id: string };
         const remaining = (state.symptoms[date] ?? []).filter((e) => e.id !== id);
-        const newSymptoms = remaining.length === 0
-          ? Object.fromEntries(Object.entries(state.symptoms).filter(([k]) => k !== date))
-          : { ...state.symptoms, [date]: remaining };
+        const newSymptoms =
+          remaining.length === 0
+            ? Object.fromEntries(Object.entries(state.symptoms).filter(([k]) => k !== date))
+            : { ...state.symptoms, [date]: remaining };
         return { ...state, symptoms: newSymptoms };
       }
+      case ACTIONS.SET_THEME:
+        return { ...state, themePreference: action.payload as ThemePreference };
       default:
         return state;
     }
@@ -232,7 +223,7 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
   const [state, dispatch] = useReducer(
     reducer,
     initialState,
-    (init) => init ?? loadState()
+    (init) => (init ? { ...defaultState, ...init } : loadState())
   );
 
   useEffect(() => {
@@ -243,9 +234,25 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
         log: state.log,
         meals: state.meals,
         symptoms: state.symptoms,
+        themePreference: state.themePreference,
       })
     );
-  }, [state.favorites, state.log, state.meals, state.symptoms]);
+  }, [state.favorites, state.log, state.meals, state.symptoms, state.themePreference]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const apply = (dark: boolean) => root.classList.toggle("dark", dark);
+
+    if (state.themePreference === "dark") { apply(true); return; }
+    if (state.themePreference === "light") { apply(false); return; }
+
+    if (typeof window.matchMedia !== "function") return;
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    apply(mq.matches);
+    const handler = (e: MediaQueryListEvent) => apply(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, [state.themePreference]);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

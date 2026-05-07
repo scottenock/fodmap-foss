@@ -28,7 +28,6 @@ const daySeverity = (entries: SymptomEntry[]): "low" | "medium" | "high" | null 
   let worst = 0;
   for (const entry of entries) {
     const severityMax = Math.max(entry.bloating, entry.gas, entry.stomachPain, entry.urgency);
-    // Map stool deviation from normal (3) onto a 1–5 scale
     const stoolDev = Math.abs(entry.stoolConsistency - 3);
     const stoolScore = stoolDev === 0 ? 1 : stoolDev === 1 ? 3 : 5;
     worst = Math.max(worst, severityMax, stoolScore);
@@ -105,21 +104,21 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
   ];
 
   return (
-    <div className="px-3 pt-3 pb-2 border-b border-gray-200">
+    <div className="px-3 pt-3 pb-2 border-b border-gray-200 dark:border-gray-700">
       <div className="flex items-center justify-between mb-3">
         <button onClick={prevMonth} className="p-1" aria-label="Previous month">
-          <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <p className="text-sm font-semibold text-gray-700">{monthName} {viewYear}</p>
+        <p className="text-sm font-semibold text-gray-700 dark:text-gray-200">{monthName} {viewYear}</p>
         <button
           onClick={nextMonth}
           disabled={nextMonthDisabled}
           className={`p-1 ${nextMonthDisabled ? "opacity-30" : ""}`}
           aria-label="Next month"
         >
-          <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </button>
@@ -127,7 +126,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
 
       <div className="grid grid-cols-7 mb-1">
         {DAY_LABELS.map((d) => (
-          <p key={d} className="text-center text-xs text-gray-400 font-medium py-1">{d}</p>
+          <p key={d} className="text-center text-xs text-gray-400 dark:text-gray-500 font-medium py-1">{d}</p>
         ))}
       </div>
 
@@ -149,7 +148,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
                   <span
                     className={`flex items-center justify-center w-8 h-8 rounded-full text-sm transition-colors ${ring}
                       ${isSelected(day) ? "bg-green-400 text-white font-semibold" : ""}
-                      ${isDisabled(day) ? "text-gray-300 cursor-default" : !isSelected(day) ? "text-gray-700 active:bg-gray-100" : ""}
+                      ${isDisabled(day) ? "text-gray-300 dark:text-gray-600 cursor-default" : !isSelected(day) ? "text-gray-700 dark:text-gray-200 active:bg-gray-100 dark:active:bg-gray-700" : ""}
                     `}
                   >
                     {day}

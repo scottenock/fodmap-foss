@@ -52,21 +52,28 @@ const NavBar: React.FC<NavBarProps> = ({
           tabIndex={0}
           ref={ref}
           onBlur={() => setShowMenu(false)}
-          className={`bg-white absolute right-0 top-8 rounded-xl shadow-lg border border-gray-100 overflow-hidden min-w-[130px] z-50 ${showMenu ? "" : "hidden"}`}
+          className={`bg-white dark:bg-gray-800 absolute right-0 top-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden min-w-[130px] z-50 ${showMenu ? "" : "hidden"}`}
         >
           <Link
             onMouseDown={(e) => e.preventDefault()}
-            className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 border-b border-gray-100"
+            className="block px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-700"
             to="/about"
           >
             About
           </Link>
           <Link
             onMouseDown={(e) => e.preventDefault()}
-            className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50"
+            className="block px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-700"
             to="/donate"
           >
             Donate
+          </Link>
+          <Link
+            onMouseDown={(e) => e.preventDefault()}
+            className="block px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+            to="/settings"
+          >
+            Settings
           </Link>
         </div>
       </div>

@@ -16,10 +16,10 @@ const fodmapRating = (score?: number) => {
 };
 
 const detailFields = [
-  { key: "oligos" as const, label: "Oligos" },
-  { key: "lactose" as const, label: "Lactose" },
+  { key: "oligos"   as const, label: "Oligos" },
+  { key: "lactose"  as const, label: "Lactose" },
   { key: "fructose" as const, label: "Fructose" },
-  { key: "polyols" as const, label: "Polyols" },
+  { key: "polyols"  as const, label: "Polyols" },
 ];
 
 function FoodDetail() {
@@ -44,11 +44,11 @@ function FoodDetail() {
     <div className="pb-6">
       <NavBar goesHome={false} />
 
-      <div className="bg-white border-b border-gray-100 px-4 py-4">
+      <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 mx-3 mt-3 rounded-2xl px-4 py-4">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-2xl font-bold text-gray-900">{food.name}</h1>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{food.name}</h1>
               <StarButton
                 isFavorited={isFavorited}
                 onToggle={() =>
@@ -56,9 +56,9 @@ function FoodDetail() {
                 }
               />
             </div>
-            <p className="text-sm text-gray-400 mt-0.5">{food.category}</p>
+            <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">{food.category}</p>
             {food.qty && (
-              <p className="text-sm text-gray-400 mt-0.5">Max: {food.qty}</p>
+              <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">Max: {food.qty}</p>
             )}
           </div>
           <Score
@@ -69,11 +69,11 @@ function FoodDetail() {
       </div>
 
       {sensitiveCategories.length > 0 && (
-        <div className="mx-3 mt-3 rounded-xl bg-amber-50 border border-amber-200 px-4 py-3 flex gap-3">
+        <div className="mx-3 mt-3 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 px-4 py-3 flex gap-3">
           <span className="text-amber-500 text-lg leading-none shrink-0">⚠</span>
           <div>
-            <p className="text-sm font-semibold text-amber-800">Likely sensitive to this food</p>
-            <p className="text-xs text-amber-700 mt-0.5">
+            <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">Likely sensitive to this food</p>
+            <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5">
               This food is high in{" "}
               {sensitiveCategories.map((c) => c.label).join(" and ")}, which{" "}
               {sensitiveCategories.length === 1 ? "is" : "are"} among your most triggered categories.
@@ -82,18 +82,18 @@ function FoodDetail() {
         </div>
       )}
 
-      <section className="mx-3 mt-3 rounded-xl bg-white border border-gray-100 overflow-hidden">
-        <div className="px-4 py-3 border-b border-gray-100">
-          <h2 className="font-semibold text-base text-gray-800">FODMAP Breakdown</h2>
+      <section className="mx-3 mt-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 overflow-hidden">
+        <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+          <h2 className="font-semibold text-base text-gray-800 dark:text-gray-100">FODMAP Breakdown</h2>
         </div>
         {detailFields.map(({ key, label }, i) => {
           const score = food.details?.[key] ?? 3;
           return (
             <div
               key={key}
-              className={`flex items-center justify-between px-4 py-3 ${i < detailFields.length - 1 ? "border-b border-gray-100" : ""}`}
+              className={`flex items-center justify-between px-4 py-3 ${i < detailFields.length - 1 ? "border-b border-gray-100 dark:border-gray-700" : ""}`}
             >
-              <p className="text-sm font-medium text-gray-700">{label}</p>
+              <p className="text-sm font-medium text-gray-700 dark:text-gray-200">{label}</p>
               <Score score={score} text={fodmapRating(food.details?.[key])} />
             </div>
           );
@@ -101,10 +101,10 @@ function FoodDetail() {
       </section>
 
       {hasRankingData && (
-        <section className="mx-3 mt-3 rounded-xl border border-gray-100 bg-white overflow-hidden">
-          <div className="px-4 py-3 border-b border-gray-100">
-            <h2 className="font-semibold text-base text-gray-800">Your FODMAP Sensitivity</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Based on your logged symptoms</p>
+        <section className="mx-3 mt-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
+          <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+            <h2 className="font-semibold text-base text-gray-800 dark:text-gray-100">Your FODMAP Sensitivity</h2>
+            <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Based on your logged symptoms</p>
           </div>
           <FodmapCategoryBars categories={categoryRanking} />
         </section>

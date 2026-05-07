@@ -18,27 +18,24 @@ const FoodList: React.FC<FoodListProps> = ({ foods }) => {
   const currentItems = foods.slice(0, loadedItems);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-gray-800">
       <InfiniteScroll
         start={0}
         hasMore={foods.length > currentItems.length}
         loadMore={() => setLoadedItems((items) => items + incrementValue)}
       >
         {currentItems.map((food, index) => (
-          <div key={`${food.id}-${index}`} className="border-b border-gray-100">
+          <div key={`${food.id}-${index}`} className="border-b border-gray-100 dark:border-gray-700">
             <div className="flex items-center px-4 py-3 gap-3">
               <Link
                 to={`/food/${food.id}`}
                 className="flex flex-1 items-center justify-between gap-3 min-w-0"
               >
                 <div className="min-w-0">
-                  <p className="text-base font-medium text-gray-900 truncate">{food.name}</p>
-                  <p className="text-sm text-gray-400">{food.category}</p>
+                  <p className="text-base font-medium text-gray-900 dark:text-white truncate">{food.name}</p>
+                  <p className="text-sm text-gray-400 dark:text-gray-500">{food.category}</p>
                 </div>
-                <Score
-                  text={food.fodmap}
-                  score={food.fodmap === "high" ? 2 : 0}
-                />
+                <Score text={food.fodmap} score={food.fodmap === "high" ? 2 : 0} />
               </Link>
               <StarButton
                 isFavorited={state.favorites.includes(food.id)}

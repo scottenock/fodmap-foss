@@ -37,17 +37,17 @@ const FoodPicker: React.FC<FoodPickerProps> = ({ meal, existingFoodIds = [], onS
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900">
       <nav className="px-4 py-3 bg-green-400 flex items-center gap-3">
         <button onClick={onClose} aria-label="Go back">
           <img src={leftArrow} className="w-5 h-5" alt="" />
         </button>
         <SearchInput value={searchTerm} onChange={setSearchTerm} autoFocus />
       </nav>
-      <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wide text-gray-400 bg-gray-50 border-b border-gray-200">
+      <p className="px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         Adding to {meal}
       </p>
-      <div className="overflow-y-auto flex-1">
+      <div className="overflow-y-auto flex-1 bg-white dark:bg-gray-900">
         <InfiniteScroll
           start={0}
           hasMore={foods.length > currentItems.length}
@@ -57,17 +57,13 @@ const FoodPicker: React.FC<FoodPickerProps> = ({ meal, existingFoodIds = [], onS
             <button
               key={`${food.id}-${index}`}
               onClick={() => handleFoodTap(food)}
-              className="w-full text-left px-3 py-2 border-b border-gray-200 flex items-center justify-between"
+              className="w-full text-left px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between"
             >
               <div>
-                <p className="text-lg">{food.name}</p>
-                <p className="text-sm text-gray-500">{food.category}</p>
+                <p className="text-base font-medium text-gray-900 dark:text-white">{food.name}</p>
+                <p className="text-sm text-gray-400 dark:text-gray-500">{food.category}</p>
               </div>
-              <Score
-                text={food.fodmap}
-                score={food.fodmap === "high" ? 2 : 0}
-                reversed={true}
-              />
+              <Score text={food.fodmap} score={food.fodmap === "high" ? 2 : 0} />
             </button>
           ))}
         </InfiniteScroll>
@@ -75,24 +71,17 @@ const FoodPicker: React.FC<FoodPickerProps> = ({ meal, existingFoodIds = [], onS
 
       {selectedFood && (
         <div className="fixed inset-0 z-30 flex flex-col justify-end items-center">
-          <div
-            className="fixed inset-0 bg-black/40"
-            onClick={() => setSelectedFood(null)}
-          />
-          <div className="relative z-40 bg-white rounded-t-2xl p-5 shadow-xl w-full max-w-screen-sm">
+          <div className="fixed inset-0 bg-black/40" onClick={() => setSelectedFood(null)} />
+          <div className="relative z-40 bg-white dark:bg-gray-800 rounded-t-2xl p-5 shadow-xl w-full max-w-screen-sm">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <p className="text-lg font-medium">{selectedFood.name}</p>
-                <p className="text-sm text-gray-500">{selectedFood.category}</p>
+                <p className="text-lg font-medium text-gray-900 dark:text-white">{selectedFood.name}</p>
+                <p className="text-sm text-gray-400 dark:text-gray-500">{selectedFood.category}</p>
               </div>
-              <Score
-                text={selectedFood.fodmap}
-                score={selectedFood.fodmap === "high" ? 2 : 0}
-                reversed={true}
-              />
+              <Score text={selectedFood.fodmap} score={selectedFood.fodmap === "high" ? 2 : 0} />
             </div>
 
-            <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-3">
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-3">
               Quantity
             </p>
             <input
@@ -104,12 +93,12 @@ const FoodPicker: React.FC<FoodPickerProps> = ({ meal, existingFoodIds = [], onS
               onChange={(e) => setQuantity(Number(e.target.value))}
               className="w-full accent-green-400"
             />
-            <div className="flex justify-between text-xs text-gray-400 mt-1 mb-1">
+            <div className="flex justify-between text-xs text-gray-400 dark:text-gray-500 mt-1 mb-1">
               {QUANTITY_LABELS.map((label) => (
                 <span key={label}>{label}</span>
               ))}
             </div>
-            <p className="text-center text-green-600 font-semibold mb-5">
+            <p className="text-center text-green-600 dark:text-green-400 font-semibold mb-5">
               {QUANTITY_LABELS[quantity - 1]}
             </p>
 

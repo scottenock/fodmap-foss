@@ -5,6 +5,7 @@ import Donate from "./pages/Donate";
 import FoodDetail from "./pages/FoodDetail";
 import Foods from "./pages/Foods";
 import Home from "./pages/Home";
+import Settings from "./pages/Settings";
 import Track from "./pages/Track";
 import SymptomAnalysis from "./pages/SymptomAnalysis";
 import TriggerFoods from "./pages/TriggerFoods";
@@ -23,6 +24,7 @@ function App() {
             <Route path="/track" Component={Track} />
             <Route path="/analysis" Component={SymptomAnalysis} />
             <Route path="/analysis/triggers" Component={TriggerFoods} />
+            <Route path="/settings" Component={Settings} />
           </Routes>
         </HashRouter>
       </AppProvider>

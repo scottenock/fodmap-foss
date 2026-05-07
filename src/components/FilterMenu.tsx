@@ -14,7 +14,7 @@ type FilterMenuProps = {
 
 const sortOptions = [
   { label: "Low → High", value: "l-h" },
-  { label: "A-Z", value: "a-z" },
+  { label: "A-Z",        value: "a-z" },
   { label: "High → Low", value: "h-l" },
 ];
 
@@ -31,9 +31,9 @@ const FilterMenu: React.FC<FilterMenuProps> = ({
 }) => (
   <>
     <div className="fixed inset-0 z-10" onClick={onClose} />
-    <div className="relative z-20 bg-white shadow-bottom border-b border-gray-200">
-      <div className="p-3 border-b border-gray-100">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
+    <div className="relative z-20 bg-white dark:bg-gray-800 shadow-bottom border-b border-gray-200 dark:border-gray-700">
+      <div className="p-3 border-b border-gray-100 dark:border-gray-700">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-2">
           Favorites
         </p>
         <PillButton
@@ -48,8 +48,8 @@ const FilterMenu: React.FC<FilterMenuProps> = ({
         </PillButton>
       </div>
 
-      <div className="p-3 border-b border-gray-100">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
+      <div className="p-3 border-b border-gray-100 dark:border-gray-700">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-2">
           Sort
         </p>
         <div className="flex gap-2">
@@ -68,13 +68,13 @@ const FilterMenu: React.FC<FilterMenuProps> = ({
 
       <div className="p-3">
         <div className="flex justify-between items-center mb-2">
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">
+          <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">
             Category
           </p>
           {selectedCategories.length > 0 && (
             <button
               onClick={onClearCategories}
-              className="text-xs text-green-600 font-medium"
+              className="text-xs text-green-600 dark:text-green-400 font-medium"
             >
               Clear all
             </button>

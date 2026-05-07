@@ -19,10 +19,10 @@ const DateNav: React.FC<DateNavProps> = ({
   onNextDay,
   nextDayDisabled = false,
 }) => (
-  <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+  <div className="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
     <button onClick={onPrevDay} className="p-1" aria-label="Previous day">
       <svg
-        className="w-5 h-5 text-gray-500"
+        className="w-5 h-5 text-gray-500 dark:text-gray-400"
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
@@ -31,7 +31,7 @@ const DateNav: React.FC<DateNavProps> = ({
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
       </svg>
     </button>
-    <p className="text-sm font-medium text-gray-700">{formatDate(date)}</p>
+    <p className="text-sm font-medium text-gray-700 dark:text-gray-200">{formatDate(date)}</p>
     <button
       onClick={onNextDay}
       disabled={nextDayDisabled}
@@ -39,7 +39,7 @@ const DateNav: React.FC<DateNavProps> = ({
       aria-label="Next day"
     >
       <svg
-        className="w-5 h-5 text-gray-500"
+        className="w-5 h-5 text-gray-500 dark:text-gray-400"
         fill="none"
         stroke="currentColor"
         strokeWidth="2"

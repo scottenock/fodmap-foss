@@ -45,21 +45,21 @@ const NavCard: React.FC<NavCardProps> = ({ to, state: linkState, icon, label, de
   <Link
     to={to}
     state={linkState}
-    className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col gap-3 active:scale-95 transition-transform"
+    className="bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col gap-3 active:scale-95 transition-transform"
   >
     <div className={`w-10 h-10 rounded-xl ${iconBg} ${iconColor} flex items-center justify-center`}>
       {icon}
     </div>
     <div>
-      <p className="font-semibold text-gray-800 text-sm">{label}</p>
-      <p className="text-xs text-gray-400 mt-0.5">{description}</p>
+      <p className="font-semibold text-gray-800 dark:text-gray-100 text-sm">{label}</p>
+      <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{description}</p>
     </div>
   </Link>
 );
 
 function Home() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <div className="bg-green-400 px-6 pt-14 pb-20 flex flex-col items-center">
         <img className="w-20 h-20 rounded-3xl shadow-xl mb-5" src={logo} alt="FODMAP FOSS" />
         <h1 className="text-2xl font-bold text-white tracking-tight">FODMAP FOSS</h1>
@@ -73,16 +73,16 @@ function Home() {
             icon={<SearchIcon />}
             label="Search Foods"
             description="Browse FODMAP database"
-            iconBg="bg-green-100"
-            iconColor="text-green-600"
+            iconBg="bg-green-100 dark:bg-green-900/40"
+            iconColor="text-green-600 dark:text-green-400"
           />
           <NavCard
             to="/track"
             icon={<CalendarIcon />}
             label="Track"
             description="Log meals & symptoms"
-            iconBg="bg-blue-100"
-            iconColor="text-blue-600"
+            iconBg="bg-blue-100 dark:bg-blue-900/40"
+            iconColor="text-blue-600 dark:text-blue-400"
           />
           <NavCard
             to="/food"
@@ -90,31 +90,37 @@ function Home() {
             icon={<StarIcon />}
             label="Favorites"
             description="Your saved foods"
-            iconBg="bg-amber-100"
-            iconColor="text-amber-600"
+            iconBg="bg-amber-100 dark:bg-amber-900/40"
+            iconColor="text-amber-600 dark:text-amber-400"
           />
           <NavCard
             to="/analysis"
             icon={<ChartIcon />}
             label="Analysis"
             description="Symptom insights"
-            iconBg="bg-purple-100"
-            iconColor="text-purple-600"
+            iconBg="bg-purple-100 dark:bg-purple-900/40"
+            iconColor="text-purple-600 dark:text-purple-400"
           />
         </div>
 
-        <div className="flex gap-3 mt-auto pt-2">
+        <div className="grid grid-cols-3 gap-3 mt-auto pt-2">
           <Link
             to="/about"
-            className="flex-1 text-center py-3 text-sm text-gray-500 bg-white border border-gray-100 rounded-xl shadow-sm"
+            className="text-center py-3 text-sm text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm"
           >
             About
           </Link>
           <Link
             to="/donate"
-            className="flex-1 text-center py-3 text-sm text-gray-500 bg-white border border-gray-100 rounded-xl shadow-sm"
+            className="text-center py-3 text-sm text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm"
           >
             Donate
+          </Link>
+          <Link
+            to="/settings"
+            className="text-center py-3 text-sm text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm"
+          >
+            Settings
           </Link>
         </div>
       </div>

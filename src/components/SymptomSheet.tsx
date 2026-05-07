@@ -68,15 +68,15 @@ const SymptomSheet: React.FC<SymptomSheetProps> = ({ existingSymptoms = [], onLo
   return (
     <div className="fixed inset-0 z-30 flex flex-col justify-end items-center">
       <div className="fixed inset-0 bg-black/40" onClick={onClose} />
-      <div className="relative z-40 bg-white rounded-t-2xl w-full max-w-screen-sm max-h-[85vh] flex flex-col shadow-xl">
-        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-gray-100 shrink-0">
-          <p className="font-semibold text-base">Log Symptom</p>
-          <button onClick={onClose} className="text-gray-400 text-2xl leading-none">×</button>
+      <div className="relative z-40 bg-white dark:bg-gray-800 rounded-t-2xl w-full max-w-screen-sm max-h-[85vh] flex flex-col shadow-xl">
+        <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-gray-100 dark:border-gray-700 shrink-0">
+          <p className="font-semibold text-base text-gray-900 dark:text-white">Log Symptom</p>
+          <button onClick={onClose} className="text-gray-400 dark:text-gray-500 text-2xl leading-none">×</button>
         </div>
 
         <div className="overflow-y-auto flex-1 px-5 py-4 space-y-6">
           <section>
-            <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-2">
               Relative to
             </p>
             <div className="flex gap-2">
@@ -94,7 +94,7 @@ const SymptomSheet: React.FC<SymptomSheetProps> = ({ existingSymptoms = [], onLo
           </section>
 
           <section>
-            <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-2">
               Timing
             </p>
             <input
@@ -106,17 +106,17 @@ const SymptomSheet: React.FC<SymptomSheetProps> = ({ existingSymptoms = [], onLo
               onChange={(e) => setTiming(Number(e.target.value))}
               className="w-full accent-green-400"
             />
-            <div className="flex justify-between text-xs text-gray-400 mt-1">
+            <div className="flex justify-between text-xs text-gray-400 dark:text-gray-500 mt-1">
               {TIMING_LABELS.map((l) => <span key={l}>{l}</span>)}
             </div>
-            <p className="text-center text-green-600 font-semibold mt-1">
+            <p className="text-center text-green-600 dark:text-green-400 font-semibold mt-1">
               {TIMING_LABELS[timing]}
             </p>
           </section>
 
           {SLIDERS.map(({ key, label, minLabel, midLabel, maxLabel }) => (
             <section key={key}>
-              <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 mb-2">
                 {label}
               </p>
               <input
@@ -130,7 +130,7 @@ const SymptomSheet: React.FC<SymptomSheetProps> = ({ existingSymptoms = [], onLo
                 }
                 className="w-full accent-green-400"
               />
-              <div className="flex justify-between text-xs text-gray-400 mt-1">
+              <div className="flex justify-between text-xs text-gray-400 dark:text-gray-500 mt-1">
                 <span>{minLabel}</span>
                 {midLabel && <span>{midLabel}</span>}
                 <span>{maxLabel}</span>
@@ -139,7 +139,7 @@ const SymptomSheet: React.FC<SymptomSheetProps> = ({ existingSymptoms = [], onLo
           ))}
         </div>
 
-        <div className="px-5 py-4 border-t border-gray-100 shrink-0">
+        <div className="px-5 py-4 border-t border-gray-100 dark:border-gray-700 shrink-0">
           <button
             onClick={handleConfirm}
             className="w-full bg-green-400 text-white rounded-full py-3 font-semibold"
