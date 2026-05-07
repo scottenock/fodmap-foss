@@ -2,127 +2,162 @@ import { Link } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import CreatedBy from "../components/CreatedBy";
 
-const styles = {
-  section: "mb-5",
-};
+const fodmapCategories = [
+  {
+    label: "Oligos",
+    description: "Fructans & GOS found in wheat, onions, legumes",
+  },
+  {
+    label: "Lactose",
+    description: "Disaccharide found in dairy products",
+  },
+  {
+    label: "Fructose",
+    description: "Monosaccharide found in fruits & honey",
+  },
+  {
+    label: "Polyols",
+    description: "Sugar alcohols found in some fruits & sweeteners",
+  },
+];
+
+const steps = [
+  "Eliminate all high FODMAP foods from your diet.",
+  "Slowly reintroduce them one at a time to identify which ones trigger symptoms.",
+  "Avoid only the foods that cause you problems — enjoy everything else.",
+];
 
 function About() {
   return (
-    <>
+    <div className="pb-8">
       <NavBar title="About" />
-      <div className="p-3">
-        <section className={styles.section}>
-          <h1 className="font-bold text-lg mb-4">About FODMAPs</h1>
-          <p className="mb-3">
-            FODMAPs are short chain carbohydrates (sugars) that are poorly
-            absorbed by the small intestine.
-          </p>
-          <p className="mb-3">
-            The low FODMAP diet is designed to help manage symptoms of irritable
-            bowel syndrome (IBS) and other functional gastrointestinal
-            disorders. It involves restricting foods high in certain fermentable
-            carbohydrates:
-          </p>
-          <div className="mb-4">
-            <p className="mb-3 font-medium">Oligos</p>
-            <div className="border-b-2 border-gray-300 mb-2" />
-            <p className="mb-3 font-medium">Lactose</p>
-            <div className="border-b-2 border-gray-300 mb-2" />
-            <p className="mb-3 font-medium">Fructose</p>
-            <div className="border-b-2 border-gray-300 mb-2" />
-            <p className="mb-3 font-medium">Polyols</p>
-            <div className="border-b-2 border-gray-300 mb-2" />
-          </div>
-          <p className="mb-3 font-medium">
-            Each food is categorized into the following two groups depending on
-            their concentrations of the above carbohydrates:
-          </p>
 
-          <div className="mb-3">
-            <div className="flex items-center my-1">
-              <span
-                className={`rounded-full w-5 h-5 block mr-2 bg-green-300`}
-              />
-              <p className="text-2xl">LOW</p>
-            </div>
-            <div className="border-b-2 border-gray-300 mb-2" />
-            <ul className="list-disc list-inside">
-              <li>Considered safe to eat</li>
-              <li>Does not take into account food allergies</li>
-              <li>Some foods have daily consumption limits</li>
-            </ul>
+      <div className="px-4 pt-4 space-y-4">
+
+        <section className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="px-4 py-3 border-b border-gray-100">
+            <h2 className="font-semibold text-base text-gray-800">What are FODMAPs?</h2>
           </div>
-          <div>
-            <div className="flex items-center my-1">
-              <span className={`rounded-full w-5 h-5 block mr-2 bg-red-500`} />
-              <p className="text-2xl">HIGH</p>
-            </div>
-            <div className="border-b-2 border-gray-300 mb-2" />
-            <ul className="list-disc list-inside">
-              <li>Avoid during the elimiation phase of the diet</li>
-              <li>slowly reintroduce to see which ones are troublesome.</li>
-            </ul>
+          <div className="px-4 py-4 space-y-2 text-sm text-gray-600 leading-relaxed">
+            <p>
+              FODMAPs are short-chain carbohydrates (sugars) that are poorly absorbed
+              by the small intestine. They ferment in the gut, causing symptoms in
+              people with IBS and other functional gastrointestinal disorders.
+            </p>
+            <p>The acronym stands for four types of fermentable carbohydrates:</p>
+          </div>
+          <div className="px-4 pb-4 grid grid-cols-2 gap-2">
+            {fodmapCategories.map((c) => (
+              <div key={c.label} className="bg-gray-50 rounded-xl p-3">
+                <p className="font-semibold text-sm text-gray-800">{c.label}</p>
+                <p className="text-xs text-gray-400 mt-0.5 leading-snug">{c.description}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        <section className={styles.section}>
-          <h2 className="font-bold text-lg mb-4">
-            Three Steps of The FODMAP Diet
+        <section className="space-y-2">
+          <h2 className="font-semibold text-sm text-gray-400 uppercase tracking-wide px-1">
+            FODMAP Levels
           </h2>
-          <p className="mb-3">The low FODMAP is a three-step elimination diet:</p>
-          <ol className="list-decimal list-inside">
-            <li className="mb-1">
-              Stop eating certain foods that are HIGH FODMAP
-            </li>
-            <li className="mb-1">
-              slowly reintroduce them to see which ones are troublesome
-            </li>
-            <li className="mb-1">
-              Avoid and limit the foods you have identified which cause
-              symptoms, and enjoy everything else
-            </li>
-          </ol>
+          <div className="bg-green-50 border border-green-100 rounded-2xl px-4 py-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-3 h-3 rounded-full bg-green-400 shrink-0" />
+              <p className="font-bold text-green-800 text-base tracking-wide">LOW</p>
+            </div>
+            <ul className="space-y-1">
+              {[
+                "Generally safe to eat",
+                "Does not account for food allergies",
+                "Some foods have daily consumption limits",
+              ].map((item) => (
+                <li key={item} className="text-sm text-green-700 flex items-start gap-2">
+                  <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-red-50 border border-red-100 rounded-2xl px-4 py-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-3 h-3 rounded-full bg-red-500 shrink-0" />
+              <p className="font-bold text-red-800 text-base tracking-wide">HIGH</p>
+            </div>
+            <ul className="space-y-1">
+              {[
+                "Avoid during the elimination phase",
+                "Slowly reintroduce to identify problem foods",
+              ].map((item) => (
+                <li key={item} className="text-sm text-red-700 flex items-start gap-2">
+                  <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
 
-        <section className={styles.section}>
-          <h2 className="font-bold text-lg mb-4">Support the Project</h2>
-          <p className="mb-3">
-            This app is FOSS (Free and Open Source Software), which doesn't
-            track or spy on you.
-          </p>
-          <p className="mb-3">
-            If you have found this app beneficial we encourage you to donate{" "}
-            <Link className="text-red-500" to="/donate">
-              here.
-            </Link>
-          </p>
-          <p className="mb-3">
-            The source code of this app is viewable{" "}
-            <Link
-              className="text-red-500"
-              target="_blank"
-              to="https://github.com/ScottEnock/fodmap-foss"
-            >
-              here.
-            </Link>
-          </p>
+        <section className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="px-4 py-3 border-b border-gray-100">
+            <h2 className="font-semibold text-base text-gray-800">The Three Steps</h2>
+            <p className="text-xs text-gray-400 mt-0.5">A structured elimination diet</p>
+          </div>
+          <div className="divide-y divide-gray-100">
+            {steps.map((step, i) => (
+              <div key={i} className="flex items-start gap-4 px-4 py-3">
+                <span className="w-6 h-6 rounded-full bg-green-400 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                  {i + 1}
+                </span>
+                <p className="text-sm text-gray-600 leading-relaxed">{step}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
-        <section className={styles.section}>
-          <h2 className="font-bold text-lg mb-4">Disclaimer</h2>
-          <p className="mb-3">
-            We do not perform any testing ourselves. The data provided is
-            compiled from several different sources, and should be used as a
-            guideline not as a basis of fact.
-          </p>
-          <p className="mb-3">
-            Please consult your physician before beginning any new diet.
-          </p>
+        <section className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="px-4 py-3 border-b border-gray-100">
+            <h2 className="font-semibold text-base text-gray-800">Open Source</h2>
+          </div>
+          <div className="px-4 py-4 space-y-2 text-sm text-gray-600 leading-relaxed">
+            <p>
+              FODMAP FOSS is free and open-source software — it does not track or
+              spy on you. All data is stored locally on your device.
+            </p>
+            <div className="flex gap-3 pt-1">
+              <Link
+                to="/donate"
+                className="flex-1 text-center bg-green-400 text-white font-medium py-2.5 rounded-xl text-sm"
+              >
+                Donate
+              </Link>
+              <Link
+                to="https://github.com/ScottEnock/fodmap-foss"
+                target="_blank"
+                className="flex-1 text-center bg-gray-100 text-gray-700 font-medium py-2.5 rounded-xl text-sm"
+              >
+                View Source
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-amber-50 border border-amber-100 rounded-2xl px-4 py-4">
+          <div className="flex gap-3">
+            <span className="text-amber-500 text-lg leading-none shrink-0">⚠</span>
+            <div>
+              <p className="font-semibold text-sm text-amber-800 mb-1">Disclaimer</p>
+              <p className="text-xs text-amber-700 leading-relaxed">
+                The data provided is compiled from multiple sources and should be used
+                as a guideline, not as a basis of fact. Please consult your physician
+                before beginning any new diet.
+              </p>
+            </div>
+          </div>
         </section>
 
         <CreatedBy />
       </div>
-    </>
+    </div>
   );
 }
 

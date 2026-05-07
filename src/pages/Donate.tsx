@@ -1,65 +1,122 @@
+import { useState } from "react";
 import NavBar from "../components/NavBar";
 import xmrQR from "../assets/xmr-qr.jpeg";
 import CreatedBy from "../components/CreatedBy";
 
-const styles = {
-  section: "mb-5",
-};
+const XMR_ADDRESS =
+  "895DX5KJXNzasRzRUL7p5GF6WnVvkARiTjWost12bWLdE7wgcCtwsYUNL6fva9wvgTBVwU75Mz8cMKmMbNacCcRhNMYxRQx";
+
+const otherWays = [
+  {
+    icon: "👋",
+    label: "Spread the word",
+    description: "Tell friends who manage IBS or follow a FODMAP diet",
+  },
+  {
+    icon: "⭐",
+    label: "Star on GitHub",
+    description: "Show your support by starring the repository",
+  },
+  {
+    icon: "💡",
+    label: "Share ideas",
+    description: "Have a feature request? Open an issue on GitHub",
+  },
+];
 
 function Donate() {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(XMR_ADDRESS).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
   return (
-    <>
+    <div className="pb-8">
       <NavBar title="Donate" />
-      <div className="p-3">
-        <section className={styles.section}>
-          <h2 className="font-bold text-lg mb-4">Support the Project</h2>
-          <p className="mb-3">
-            This app is FOSS (Free and Open Source Software), which doesn't
-            track or spy on you.
-          </p>
-          <p className="mb-3">
-            If you have found this app beneficial we encourage you to donate
-          </p>
-          <p className="mb-3">
-            We, Laputa Labs, the company which originally created FODMAP FOSS,
-            have decided to make FODMAP FOSS free and open-source software
-            (FOSS) because we believe in the openness of the Internet and we
-            want to be a counterpart to all the ones who want to force people to
-            store their private data in "the cloud" (say: other people's
-            computers), using proprietary standards.
-          </p>
-        </section>
-        <section className={styles.section}>
-          <h2 className="font-bold text-lg mb-4">Donate via Monero (XMR)</h2>
-          <p className="mb-3">
-            We currently accept donations via the cryptocurrency: Monero. Like
-            cash, Monero is fungible, preserves user privacy, and is censorship
-            resistant. Making it the easiest way to transact, think of it as
-            digital cash.
-          </p>
-          <img
-            className="w-44 h-44 mx-auto mb-3"
-            src={xmrQR}
-            alt="QR code for XMR address"
-          />
-          <code className="break-words bg-gray-300">
-            895DX5KJXNzasRzRUL7p5GF6WnVvkARiTjWost12bWLdE7wgcCtwsYUNL6fva9wvgTBVwU75Mz8cMKmMbNacCcRhNMYxRQx
-          </code>
+
+      <div className="px-4 pt-4 space-y-4">
+
+        <section className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="px-4 py-4 text-center border-b border-gray-100">
+            <div className="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center mx-auto mb-3">
+              <svg className="w-6 h-6 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </div>
+            <h2 className="font-bold text-lg text-gray-800">Support FODMAP FOSS</h2>
+            <p className="text-sm text-gray-400 mt-1 leading-relaxed">
+              This app is free, open-source, and never tracks you. If it's helped
+              you manage your diet, a donation keeps development going.
+            </p>
+          </div>
+          <div className="px-4 py-4 text-sm text-gray-600 leading-relaxed">
+            <p>
+              Laputa Labs built FODMAP FOSS because we believe in open software and
+              user privacy. Your data stays on your device — always.
+            </p>
+          </div>
         </section>
 
-        <section className={styles.section}>
-          <h2 className="font-bold text-lg mb-4">Other Ways to Support</h2>
-          <p className="mb-3">If you want to help the project, here are some ideas:</p>
-          <ul className="list-disc list-inside">
-            <li>Tell your friend's about the project</li>
-            <li>Give us a star on Github</li>
-            <li>If you have a feature idea, tell us!</li>
-          </ul>
+        <section className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="px-4 py-3 border-b border-gray-100">
+            <h2 className="font-semibold text-base text-gray-800">Donate via Monero (XMR)</h2>
+            <p className="text-xs text-gray-400 mt-0.5">
+              Private, censorship-resistant digital cash
+            </p>
+          </div>
+          <div className="px-4 py-5 flex flex-col items-center gap-4">
+            <div className="p-3 bg-white border border-gray-200 rounded-2xl shadow-sm">
+              <img
+                className="w-44 h-44 block"
+                src={xmrQR}
+                alt="XMR donation QR code"
+              />
+            </div>
+            <div className="w-full">
+              <p className="text-xs text-gray-400 mb-2 text-center">Wallet address</p>
+              <div className="bg-gray-50 border border-gray-200 rounded-xl p-3">
+                <p className="text-xs font-mono text-gray-600 break-all leading-relaxed text-center">
+                  {XMR_ADDRESS}
+                </p>
+              </div>
+              <button
+                onClick={handleCopy}
+                className={`mt-3 w-full py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                  copied
+                    ? "bg-green-400 text-white"
+                    : "bg-gray-100 text-gray-700"
+                }`}
+              >
+                {copied ? "✓ Copied!" : "Copy address"}
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+          <div className="px-4 py-3 border-b border-gray-100">
+            <h2 className="font-semibold text-base text-gray-800">Other Ways to Help</h2>
+          </div>
+          <div className="divide-y divide-gray-100">
+            {otherWays.map((item) => (
+              <div key={item.label} className="flex items-start gap-4 px-4 py-3">
+                <span className="text-xl leading-none mt-0.5">{item.icon}</span>
+                <div>
+                  <p className="text-sm font-medium text-gray-800">{item.label}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <CreatedBy />
       </div>
-    </>
+    </div>
   );
 }
 
