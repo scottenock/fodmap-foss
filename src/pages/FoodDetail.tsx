@@ -44,11 +44,11 @@ function FoodDetail() {
     <div className="pb-6">
       <NavBar goesHome={false} />
 
-      <div className="bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 mx-3 mt-3 rounded-2xl px-4 py-4">
+      <div className="bg-background-primary border border-divider mx-3 mt-3 rounded-2xl px-4 py-4">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{food.name}</h1>
+              <h1 className="text-2xl font-bold text-foreground-primary">{food.name}</h1>
               <StarButton
                 isFavorited={isFavorited}
                 onToggle={() =>
@@ -56,9 +56,9 @@ function FoodDetail() {
                 }
               />
             </div>
-            <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">{food.category}</p>
+            <p className="text-sm text-foreground-muted mt-0.5">{food.category}</p>
             {food.qty && (
-              <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">Max: {food.qty}</p>
+              <p className="text-sm text-foreground-muted mt-0.5">Max: {food.qty}</p>
             )}
           </div>
           <Score
@@ -82,18 +82,18 @@ function FoodDetail() {
         </div>
       )}
 
-      <section className="mx-3 mt-3 rounded-xl bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 overflow-hidden">
-        <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-          <h2 className="font-semibold text-base text-gray-800 dark:text-gray-100">FODMAP Breakdown</h2>
+      <section className="mx-3 mt-3 rounded-xl bg-background-primary border border-divider overflow-hidden">
+        <div className="px-4 py-3 border-b border-divider">
+          <h2 className="font-semibold text-base text-foreground-primary">FODMAP Breakdown</h2>
         </div>
         {detailFields.map(({ key, label }, i) => {
           const score = food.details?.[key] ?? 3;
           return (
             <div
               key={key}
-              className={`flex items-center justify-between px-4 py-3 ${i < detailFields.length - 1 ? "border-b border-gray-100 dark:border-gray-700" : ""}`}
+              className={`flex items-center justify-between px-4 py-3 ${i < detailFields.length - 1 ? "border-b border-divider" : ""}`}
             >
-              <p className="text-sm font-medium text-gray-700 dark:text-gray-200">{label}</p>
+              <p className="text-sm font-medium text-foreground-primary">{label}</p>
               <Score score={score} text={fodmapRating(food.details?.[key])} />
             </div>
           );
@@ -101,10 +101,10 @@ function FoodDetail() {
       </section>
 
       {hasRankingData && (
-        <section className="mx-3 mt-3 rounded-xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-hidden">
-          <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-            <h2 className="font-semibold text-base text-gray-800 dark:text-gray-100">Your FODMAP Sensitivity</h2>
-            <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Based on your logged symptoms</p>
+        <section className="mx-3 mt-3 rounded-xl border border-divider bg-background-primary overflow-hidden">
+          <div className="px-4 py-3 border-b border-divider">
+            <h2 className="font-semibold text-base text-foreground-primary">Your FODMAP Sensitivity</h2>
+            <p className="text-xs text-foreground-muted mt-0.5">Based on your logged symptoms</p>
           </div>
           <FodmapCategoryBars categories={categoryRanking} />
         </section>

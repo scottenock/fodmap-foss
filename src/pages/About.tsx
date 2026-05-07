@@ -22,11 +22,11 @@ function About() {
 
       <div className="px-4 pt-4 space-y-4">
 
-        <section className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
-          <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-            <h2 className="font-semibold text-base text-gray-800 dark:text-gray-100">What are FODMAPs?</h2>
+        <section className="bg-background-primary rounded-2xl border border-divider overflow-hidden">
+          <div className="px-4 py-3 border-b border-divider">
+            <h2 className="font-semibold text-base text-foreground-primary">What are FODMAPs?</h2>
           </div>
-          <div className="px-4 py-4 space-y-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+          <div className="px-4 py-4 space-y-2 text-sm text-foreground-secondary leading-relaxed">
             <p>
               FODMAPs are short-chain carbohydrates (sugars) that are poorly absorbed
               by the small intestine. They ferment in the gut, causing symptoms in
@@ -36,16 +36,16 @@ function About() {
           </div>
           <div className="px-4 pb-4 grid grid-cols-2 gap-2">
             {fodmapCategories.map((c) => (
-              <div key={c.label} className="bg-gray-50 dark:bg-gray-700 rounded-xl p-3">
-                <p className="font-semibold text-sm text-gray-800 dark:text-gray-100">{c.label}</p>
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5 leading-snug">{c.description}</p>
+              <div key={c.label} className="bg-background-tertiary rounded-xl p-3">
+                <p className="font-semibold text-sm text-foreground-primary">{c.label}</p>
+                <p className="text-xs text-foreground-muted mt-0.5 leading-snug">{c.description}</p>
               </div>
             ))}
           </div>
         </section>
 
         <section className="space-y-2">
-          <h2 className="font-semibold text-sm text-gray-400 dark:text-gray-500 uppercase tracking-wide px-1">
+          <h2 className="font-semibold text-sm text-foreground-muted uppercase tracking-wide px-1">
             FODMAP Levels
           </h2>
           <div className="bg-green-50 dark:bg-green-900/20 border border-green-100 dark:border-green-800 rounded-2xl px-4 py-4">
@@ -85,28 +85,28 @@ function About() {
           </div>
         </section>
 
-        <section className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
-          <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-            <h2 className="font-semibold text-base text-gray-800 dark:text-gray-100">The Three Steps</h2>
-            <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">A structured elimination diet</p>
+        <section className="bg-background-primary rounded-2xl border border-divider overflow-hidden">
+          <div className="px-4 py-3 border-b border-divider">
+            <h2 className="font-semibold text-base text-foreground-primary">The Three Steps</h2>
+            <p className="text-xs text-foreground-muted mt-0.5">A structured elimination diet</p>
           </div>
-          <div className="divide-y divide-gray-100 dark:divide-gray-700">
+          <div className="divide-y divide-divider">
             {steps.map((step, i) => (
               <div key={i} className="flex items-start gap-4 px-4 py-3">
                 <span className="w-6 h-6 rounded-full bg-green-400 text-white text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                   {i + 1}
                 </span>
-                <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">{step}</p>
+                <p className="text-sm text-foreground-secondary leading-relaxed">{step}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
-          <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-            <h2 className="font-semibold text-base text-gray-800 dark:text-gray-100">Open Source</h2>
+        <section className="bg-background-primary rounded-2xl border border-divider overflow-hidden">
+          <div className="px-4 py-3 border-b border-divider">
+            <h2 className="font-semibold text-base text-foreground-primary">Open Source</h2>
           </div>
-          <div className="px-4 py-4 space-y-2 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+          <div className="px-4 py-4 space-y-2 text-sm text-foreground-secondary leading-relaxed">
             <p>
               FODMAP FOSS is free and open-source software — it does not track or
               spy on you. All data is stored locally on your device.
@@ -121,7 +121,7 @@ function About() {
               <Link
                 to="https://github.com/ScottEnock/fodmap-foss"
                 target="_blank"
-                className="flex-1 text-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium py-2.5 rounded-xl text-sm"
+                className="flex-1 text-center bg-background-tertiary text-foreground-primary font-medium py-2.5 rounded-xl text-sm"
               >
                 View Source
               </Link>

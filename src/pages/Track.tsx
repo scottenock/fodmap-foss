@@ -23,18 +23,8 @@ const adjustDate = (dateStr: string, days: number): string => {
 };
 
 const meals: MealType[] = ["breakfast", "lunch", "dinner"];
-
-const mealLabel: Record<MealType, string> = {
-  breakfast: "Breakfast",
-  lunch: "Lunch",
-  dinner: "Dinner",
-};
-
-const mealDot: Record<MealType, string> = {
-  breakfast: "bg-yellow-400",
-  lunch: "bg-orange-400",
-  dinner: "bg-indigo-400",
-};
+const mealLabel: Record<MealType, string> = { breakfast: "Breakfast", lunch: "Lunch", dinner: "Dinner" };
+const mealDot:   Record<MealType, string> = { breakfast: "bg-yellow-400", lunch: "bg-orange-400", dinner: "bg-indigo-400" };
 
 function Track() {
   const { state, dispatch } = useContext(AppContext);
@@ -42,19 +32,12 @@ function Track() {
   const [addingToMeal, setAddingToMeal] = useState<MealType | null>(null);
   const [showSymptomSheet, setShowSymptomSheet] = useState(false);
 
-  const today = toDateString(new Date());
-  const dayMeals = state.meals[selectedDate] ?? {
-    breakfast: [],
-    lunch: [],
-    dinner: [],
-  };
+  const today    = toDateString(new Date());
+  const dayMeals = state.meals[selectedDate] ?? { breakfast: [], lunch: [], dinner: [] };
 
   const handleSelectFood = (food: Fodmap, quantity: number) => {
     if (!addingToMeal) return;
-    dispatch({
-      type: ACTIONS.ADD_MEAL_FOOD,
-      payload: { date: selectedDate, meal: addingToMeal, foodId: food.id, quantity },
-    });
+    dispatch({ type: ACTIONS.ADD_MEAL_FOOD, payload: { date: selectedDate, meal: addingToMeal, foodId: food.id, quantity } });
     setAddingToMeal(null);
   };
 
@@ -64,11 +47,10 @@ function Track() {
   };
 
   if (addingToMeal) {
-    const existingFoodIds = dayMeals[addingToMeal].map((e) => e.foodId);
     return (
       <FoodPicker
         meal={mealLabel[addingToMeal]}
-        existingFoodIds={existingFoodIds}
+        existingFoodIds={dayMeals[addingToMeal].map((e) => e.foodId)}
         onSelect={handleSelectFood}
         onClose={() => setAddingToMeal(null)}
       />
@@ -78,37 +60,16 @@ function Track() {
   return (
     <div className="pb-20">
       <NavBar title="Journal" />
-      <MonthCalendar
-        selectedDate={selectedDate}
-        onSelectDate={setSelectedDate}
-        maxDate={today}
-        meals={state.meals}
-        symptoms={state.symptoms}
-      />
-      <DateNav
-        date={selectedDate}
-        onPrevDay={() => setSelectedDate((d) => adjustDate(d, -1))}
-        onNextDay={() => setSelectedDate((d) => adjustDate(d, 1))}
-        nextDayDisabled={selectedDate >= today}
-      />
+      <MonthCalendar selectedDate={selectedDate} onSelectDate={setSelectedDate} maxDate={today} meals={state.meals} symptoms={state.symptoms} />
+      <DateNav date={selectedDate} onPrevDay={() => setSelectedDate((d) => adjustDate(d, -1))} onNextDay={() => setSelectedDate((d) => adjustDate(d, 1))} nextDayDisabled={selectedDate >= today} />
+
       <div className="p-3">
         {(() => {
           const daySymptoms = state.symptoms[selectedDate] ?? [];
           const symptomCards = (context: MealType | "morning") =>
-            daySymptoms
-              .filter((e) => e.mealContext === context)
-              .map((entry) => (
-                <SymptomCard
-                  key={entry.id}
-                  entry={entry}
-                  onRemove={() =>
-                    dispatch({
-                      type: ACTIONS.REMOVE_SYMPTOM,
-                      payload: { date: selectedDate, id: entry.id },
-                    })
-                  }
-                />
-              ));
+            daySymptoms.filter((e) => e.mealContext === context).map((entry) => (
+              <SymptomCard key={entry.id} entry={entry} onRemove={() => dispatch({ type: ACTIONS.REMOVE_SYMPTOM, payload: { date: selectedDate, id: entry.id } })} />
+            ));
 
           const morningCards = symptomCards("morning");
 
@@ -116,7 +77,7 @@ function Track() {
             <>
               {morningCards.length > 0 && (
                 <section className="mb-5">
-                  <h2 className="font-semibold text-base text-gray-700 dark:text-gray-200 mb-2">Morning</h2>
+                  <h2 className="font-semibold text-base text-foreground-primary mb-2">Morning</h2>
                   {morningCards}
                 </section>
               )}
@@ -125,40 +86,24 @@ function Track() {
                 <section key={meal} className="mb-5">
                   <div className="flex items-center gap-2 mb-2">
                     <span className={`w-2.5 h-2.5 rounded-full shrink-0 ${mealDot[meal]}`} />
-                    <h2 className="font-semibold text-base text-gray-700 dark:text-gray-200">{mealLabel[meal]}</h2>
+                    <h2 className="font-semibold text-base text-foreground-primary">{mealLabel[meal]}</h2>
                   </div>
-                  <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 overflow-hidden mb-2">
+                  <div className="bg-background-primary rounded-xl border border-divider overflow-hidden mb-2">
                     {dayMeals[meal].length === 0 ? (
-                      <p className="px-4 py-3 text-sm text-gray-300 dark:text-gray-600">No foods logged</p>
+                      <p className="px-4 py-3 text-sm text-foreground-muted">No foods logged</p>
                     ) : (
                       dayMeals[meal].map(({ foodId, quantity }, i) => {
                         const food = fodmap.find((f) => f.id === foodId);
                         if (!food) return null;
                         return (
-                          <div
-                            key={`${foodId}-${i}`}
-                            className={`flex items-center justify-between px-4 py-3 ${i < dayMeals[meal].length - 1 ? "border-b border-gray-100 dark:border-gray-700" : ""}`}
-                          >
+                          <div key={`${foodId}-${i}`} className={`flex items-center justify-between px-4 py-3 ${i < dayMeals[meal].length - 1 ? "border-b border-divider" : ""}`}>
                             <div>
-                              <p className="text-base font-medium text-gray-900 dark:text-white">{food.name}</p>
-                              <p className="text-sm text-gray-400 dark:text-gray-500">
-                                {food.category} · {QUANTITY_LABELS[quantity - 1]}
-                              </p>
+                              <p className="text-base font-medium text-foreground-primary">{food.name}</p>
+                              <p className="text-sm text-foreground-muted">{food.category} · {QUANTITY_LABELS[quantity - 1]}</p>
                             </div>
                             <div className="flex items-center gap-3">
                               <Score text={food.fodmap} score={food.fodmap === "high" ? 2 : 0} />
-                              <button
-                                onClick={() =>
-                                  dispatch({
-                                    type: ACTIONS.REMOVE_MEAL_FOOD,
-                                    payload: { date: selectedDate, meal, index: i },
-                                  })
-                                }
-                                aria-label={`Remove ${food.name}`}
-                                className="p-1 text-gray-300 dark:text-gray-600 text-xl leading-none"
-                              >
-                                ×
-                              </button>
+                              <button onClick={() => dispatch({ type: ACTIONS.REMOVE_MEAL_FOOD, payload: { date: selectedDate, meal, index: i } })} aria-label={`Remove ${food.name}`} className="p-1 text-foreground-muted text-xl leading-none">×</button>
                             </div>
                           </div>
                         );
@@ -166,9 +111,7 @@ function Track() {
                     )}
                   </div>
                   {symptomCards(meal)}
-                  <PillButton onClick={() => setAddingToMeal(meal)} className="py-2 px-4 w-full">
-                    + Add food
-                  </PillButton>
+                  <PillButton onClick={() => setAddingToMeal(meal)} className="py-2 px-4 w-full">+ Add food</PillButton>
                 </section>
               ))}
             </>
@@ -177,22 +120,15 @@ function Track() {
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 z-10 flex justify-center">
-        <div className="w-full max-w-screen-sm bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 py-3">
-          <button
-            onClick={() => setShowSymptomSheet(true)}
-            className="w-full bg-green-400 text-white rounded-full py-3 font-semibold"
-          >
+        <div className="w-full max-w-screen-sm bg-background-primary border-t border-divider px-4 py-3">
+          <button onClick={() => setShowSymptomSheet(true)} className="w-full bg-green-400 text-white rounded-full py-3 font-semibold">
             Log Symptom
           </button>
         </div>
       </div>
 
       {showSymptomSheet && (
-        <SymptomSheet
-          existingSymptoms={state.symptoms[selectedDate] ?? []}
-          onLog={handleLogSymptom}
-          onClose={() => setShowSymptomSheet(false)}
-        />
+        <SymptomSheet existingSymptoms={state.symptoms[selectedDate] ?? []} onLog={handleLogSymptom} onClose={() => setShowSymptomSheet(false)} />
       )}
     </div>
   );

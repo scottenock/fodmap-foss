@@ -16,7 +16,7 @@ const PillButton: React.FC<PillButtonProps> = ({
     className={`rounded-full text-sm border transition-colors ${
       active
         ? "bg-green-400 text-white border-green-400"
-        : "bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600"
+        : "bg-background-primary text-foreground-secondary border-divider"
     } ${className}`}
   >
     {children}

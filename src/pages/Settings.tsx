@@ -68,14 +68,14 @@ function Settings() {
       <div className="px-4 pt-4 space-y-4">
 
         <section>
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 px-1 mb-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted px-1 mb-2">
             Appearance
           </p>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+          <div className="bg-background-primary rounded-2xl border border-divider overflow-hidden">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-divider">
               <div>
-                <p className="text-sm font-medium text-gray-800 dark:text-gray-100">Dark Mode</p>
-                <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">Choose your preferred colour scheme</p>
+                <p className="text-sm font-medium text-foreground-primary">Dark Mode</p>
+                <p className="text-xs text-foreground-muted mt-0.5">Choose your preferred colour scheme</p>
               </div>
             </div>
             <div className="p-3">
@@ -89,7 +89,7 @@ function Settings() {
                       className={`flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl border text-sm font-medium transition-colors ${
                         active
                           ? "bg-green-400 text-white border-green-400"
-                          : "bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300 border-gray-200 dark:border-gray-600"
+                          : "bg-background-tertiary text-foreground-secondary border-divider"
                       }`}
                     >
                       {icon}
@@ -103,13 +103,13 @@ function Settings() {
         </section>
 
         <section>
-          <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500 px-1 mb-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-foreground-muted px-1 mb-2">
             Data
           </p>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden">
-            <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-              <p className="text-sm font-medium text-gray-800 dark:text-gray-100">Export Data</p>
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+          <div className="bg-background-primary rounded-2xl border border-divider overflow-hidden">
+            <div className="px-4 py-3 border-b border-divider">
+              <p className="text-sm font-medium text-foreground-primary">Export Data</p>
+              <p className="text-xs text-foreground-muted mt-0.5">
                 Download your meals, symptoms, and favourites as a JSON file
               </p>
             </div>
@@ -119,7 +119,7 @@ function Settings() {
                 className={`w-full flex items-center justify-center gap-2 py-3 rounded-xl font-medium text-sm transition-colors ${
                   exported
                     ? "bg-green-400 text-white"
-                    : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+                    : "bg-background-tertiary text-foreground-primary"
                 }`}
               >
                 {exported ? (
