@@ -143,6 +143,15 @@ function About() {
           </div>
         </section>
 
+        <div className="flex justify-center pb-2">
+          <Link
+            to="/privacy"
+            className="text-xs text-foreground-muted hover:text-foreground-secondary"
+          >
+            Privacy Policy
+          </Link>
+        </div>
+
         <CreatedBy />
       </div>
     </div>
