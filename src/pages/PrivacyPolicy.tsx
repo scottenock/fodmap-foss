@@ -12,11 +12,12 @@ const sections = [
       "No user information is gathered or stored.",
       "No cookies or tracking technologies are used.",
       "No third-party analytics or advertising services are integrated into the app.",
+      "Meal photos are analysed entirely on your device by a bundled model. They are never uploaded, and the app does not keep them after the analysis.",
     ],
   },
   {
     title: "No Permissions Required",
-    body: "Our app operates independently of any device permissions. We do not request access to any phone permissions.",
+    body: "Our app operates independently of any device permissions. We do not request access to any phone permissions. When you choose to photograph a meal, your device's own camera or gallery app supplies the picture.",
   },
   {
     title: "Data Security",

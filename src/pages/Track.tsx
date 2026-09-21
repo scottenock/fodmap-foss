@@ -4,12 +4,15 @@ import MonthCalendar from "../components/MonthCalendar";
 import DateNav from "../components/DateNav";
 import PillButton from "../components/PillButton";
 import FoodPicker from "../components/FoodPicker";
+import PhotoMealSheet from "../components/PhotoMealSheet";
 import Score from "../components/Score";
 import SymptomSheet from "../components/SymptomSheet";
 import SymptomCard from "../components/SymptomCard";
-import AppContext, { ACTIONS, MealType, SymptomEntry } from "../context/AppContext";
+import AppContext, { ACTIONS, MealEntry, MealType, SymptomEntry } from "../context/AppContext";
 import { Fodmap } from "../types/Fodmap";
 import fodmap from "../data/fodmap";
+import { isRecognitionSupported } from "../recognition/client";
+import camera from "../icons/camera.svg";
 
 const QUANTITY_LABELS = ["Tiny", "Small", "Medium", "Large", "Loads"];
 
@@ -30,6 +33,7 @@ function Track() {
   const { state, dispatch } = useContext(AppContext);
   const [selectedDate, setSelectedDate] = useState(() => toDateString(new Date()));
   const [addingToMeal, setAddingToMeal] = useState<MealType | null>(null);
+  const [photographingMeal, setPhotographingMeal] = useState<MealType | null>(null);
   const [showSymptomSheet, setShowSymptomSheet] = useState(false);
 
   const today    = toDateString(new Date());
@@ -39,6 +43,12 @@ function Track() {
     if (!addingToMeal) return;
     dispatch({ type: ACTIONS.ADD_MEAL_FOOD, payload: { date: selectedDate, meal: addingToMeal, foodId: food.id, quantity } });
     setAddingToMeal(null);
+  };
+
+  const handleAddPhotoFoods = (entries: MealEntry[]) => {
+    if (!photographingMeal) return;
+    dispatch({ type: ACTIONS.ADD_MEAL_FOODS, payload: { date: selectedDate, meal: photographingMeal, entries } });
+    setPhotographingMeal(null);
   };
 
   const handleLogSymptom = (entry: SymptomEntry) => {
@@ -53,6 +63,17 @@ function Track() {
         existingFoodIds={dayMeals[addingToMeal].map((e) => e.foodId)}
         onSelect={handleSelectFood}
         onClose={() => setAddingToMeal(null)}
+      />
+    );
+  }
+
+  if (photographingMeal) {
+    return (
+      <PhotoMealSheet
+        meal={mealLabel[photographingMeal]}
+        existingFoodIds={dayMeals[photographingMeal].map((e) => e.foodId)}
+        onAdd={handleAddPhotoFoods}
+        onClose={() => setPhotographingMeal(null)}
       />
     );
   }
@@ -111,7 +132,15 @@ function Track() {
                     )}
                   </div>
                   {symptomCards(meal)}
-                  <PillButton onClick={() => setAddingToMeal(meal)} className="py-2 px-4 w-full">+ Add food</PillButton>
+                  <div className="flex gap-2">
+                    <PillButton onClick={() => setAddingToMeal(meal)} className="py-2 px-4 flex-1">+ Add food</PillButton>
+                    {isRecognitionSupported() && (
+                      <PillButton onClick={() => setPhotographingMeal(meal)} className="py-2 px-4 flex items-center justify-center gap-2">
+                        <img src={camera} className="w-4 h-4 dark:invert" alt="" />
+                        Photo
+                      </PillButton>
+                    )}
+                  </div>
                 </section>
               ))}
             </>

@@ -55,6 +55,7 @@ export enum ACTIONS {
   LOG_FOOD = "LOG_FOOD",
   UNLOG_FOOD = "UNLOG_FOOD",
   ADD_MEAL_FOOD = "ADD_MEAL_FOOD",
+  ADD_MEAL_FOODS = "ADD_MEAL_FOODS",
   REMOVE_MEAL_FOOD = "REMOVE_MEAL_FOOD",
   LOG_SYMPTOM = "LOG_SYMPTOM",
   REMOVE_SYMPTOM = "REMOVE_SYMPTOM",
@@ -174,6 +175,20 @@ export const AppProvider = ({ children, initialState }: AppProvider) => {
           meals: {
             ...state.meals,
             [date]: { ...dayMeals, [meal]: [...dayMeals[meal], { foodId, quantity }] },
+          },
+        };
+      }
+      case ACTIONS.ADD_MEAL_FOODS: {
+        const { date, meal, entries } = action.payload as {
+          date: string; meal: MealType; entries: MealEntry[];
+        };
+        if (entries.length === 0) return state;
+        const dayMeals = state.meals[date] ?? emptyDayMeals();
+        return {
+          ...state,
+          meals: {
+            ...state.meals,
+            [date]: { ...dayMeals, [meal]: [...dayMeals[meal], ...entries] },
           },
         };
       }

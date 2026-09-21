@@ -17,6 +17,7 @@ const MockPage = () => {
       <button onClick={() => dispatch({ type: ACTIONS.LOG_FOOD, payload: { id: "food-1", date } })}>LOG</button>
       <button onClick={() => dispatch({ type: ACTIONS.UNLOG_FOOD, payload: { id: "food-1", date } })}>UNLOG</button>
       <button onClick={() => dispatch({ type: ACTIONS.ADD_MEAL_FOOD, payload: { date, meal: "breakfast", foodId: "food-1", quantity: 3 } })}>ADD MEAL</button>
+      <button onClick={() => dispatch({ type: ACTIONS.ADD_MEAL_FOODS, payload: { date, meal: "breakfast", entries: [{ foodId: "food-2", quantity: 2 }, { foodId: "food-3", quantity: 4 }] } })}>ADD MEALS</button>
       <button onClick={() => dispatch({ type: ACTIONS.REMOVE_MEAL_FOOD, payload: { date, meal: "breakfast", index: 0 } })}>REMOVE MEAL</button>
       <p>Sort Order: {state.sortOrder}</p>
       <p>Log count: {logCount}</p>
@@ -70,6 +71,13 @@ describe("AppContext", () => {
     );
     fireEvent.click(screen.getByText("UNLOG"));
     expect(screen.getByText("Log count: 0")).toBeInTheDocument();
+  });
+
+  it("adds several foods to a meal when ADD_MEAL_FOODS is dispatched", () => {
+    render(<AppProvider initialState={baseState}><MockPage /></AppProvider>);
+    fireEvent.click(screen.getByText("ADD MEAL"));
+    fireEvent.click(screen.getByText("ADD MEALS"));
+    expect(screen.getByText("Breakfast count: 3")).toBeInTheDocument();
   });
 
   it("adds a food to a meal when ADD_MEAL_FOOD is dispatched", () => {
